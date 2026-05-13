@@ -1,0 +1,3299 @@
+<style>
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  :root {
+    --navy: #0a1628;
+    --navy2: #122040;
+    --saffron: #ff9933;
+    --saffron-lt: #fff3e0;
+    --green: #138808;
+    --green-lt: #e8f5e9;
+    --blue: #003580;
+    --blue-lt: #e3f2fd;
+    --danger: #d32f2f;
+    --danger-lt: #ffebee;
+    --warn: #e65100;
+    --warn-lt: #fff3e0;
+    --off: #f8f9fb;
+    --bdr: #e0e6f0;
+    --txt2: #4a5568;
+    --muted: #8a9bb0;
+    --r: 10px;
+    --rl: 16px;
+    --sh: 0 2px 12px rgba(10, 22, 40, 0.08);
+  }
+  body {
+    font-family: "DM Sans", system-ui, sans-serif;
+    background: var(--off);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  /* ── TOPBAR ── */
+  .topbar {
+    background: var(--navy);
+    height: 52px;
+    padding: 0 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--saffron);
+  }
+  .tb-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .wheel {
+    width: 34px;
+    height: 34px;
+    border: 2px solid var(--saffron);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--saffron);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .tb-title {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .tb-title b {
+    color: var(--saffron);
+  }
+  .badge {
+    background: var(--saffron);
+    color: var(--navy);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 20px;
+    letter-spacing: 0.4px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 55%, var(--navy2));
+    padding: 2.8rem 2rem 2.4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 280px;
+    height: 280px;
+    border: 2px solid rgba(255, 153, 51, 0.1);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: 30px;
+    right: 60px;
+    width: 150px;
+    height: 150px;
+    border: 1px solid rgba(255, 153, 51, 0.07);
+    border-radius: 50%;
+  }
+  .hero-eye {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
+  }
+  .hero-eye .ln {
+    width: 40px;
+    height: 1px;
+    background: rgba(255, 153, 51, 0.3);
+  }
+  .hero-eye span {
+    color: var(--saffron);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: 2rem;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 0.7rem;
+    max-width: 580px;
+  }
+  .hero h1 em {
+    color: var(--saffron);
+    font-style: normal;
+  }
+  .hero p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13.5px;
+    max-width: 520px;
+    line-height: 1.65;
+    margin-bottom: 1.8rem;
+  }
+  .stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 9px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .stat .n {
+    color: var(--saffron);
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .stat .l {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    background: #fff;
+    border-bottom: 1px solid var(--bdr);
+    display: flex;
+    overflow-x: auto;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: var(--sh);
+  }
+  .tab {
+    height: 48px;
+    padding: 0 18px;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--txt2);
+    white-space: nowrap;
+    font-family: inherit;
+    transition: all 0.18s;
+  }
+  .tab:hover {
+    color: var(--blue);
+  }
+  .tab.on {
+    color: var(--blue);
+    border-bottom-color: var(--saffron);
+    font-weight: 600;
+  }
+
+  /* ── CONTENT ── */
+  .content {
+    max-width: 1060px;
+    margin: 0 auto;
+    padding: 1.8rem 1.4rem 4rem;
+  }
+  .panel {
+    display: none;
+  }
+  .panel.on {
+    display: block;
+  }
+
+  /* ── SECTION HEADERS ── */
+  .sh {
+    margin-bottom: 1.4rem;
+  }
+  .sh h2 {
+    font-size: 1.5rem;
+    color: var(--navy);
+    font-weight: 700;
+  }
+  .sh p {
+    color: var(--txt2);
+    font-size: 13px;
+    margin-top: 4px;
+    max-width: 600px;
+  }
+
+  /* ── NOTICE ── */
+  .note {
+    border-radius: var(--r);
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.1rem;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .note.info {
+    background: var(--blue-lt);
+    border-left: 3px solid var(--blue);
+  }
+  .note.warn {
+    background: var(--warn-lt);
+    border-left: 3px solid var(--saffron);
+  }
+  .note.ok {
+    background: var(--green-lt);
+    border-left: 3px solid var(--green);
+  }
+  .note.bad {
+    background: var(--danger-lt);
+    border-left: 3px solid var(--danger);
+  }
+  .note strong {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  /* ── CARDS ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 1.1rem;
+    margin-bottom: 1.8rem;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid var(--bdr);
+    border-radius: var(--rl);
+    padding: 1.4rem;
+    box-shadow: var(--sh);
+  }
+  .card-hd {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    margin-bottom: 0.9rem;
+  }
+  .ico {
+    width: 40px;
+    height: 40px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .ico.b {
+    background: var(--blue-lt);
+    color: var(--blue);
+  }
+  .ico.o {
+    background: var(--warn-lt);
+    color: var(--warn);
+  }
+  .ico.g {
+    background: var(--green-lt);
+    color: var(--green);
+  }
+  .ico.r {
+    background: var(--danger-lt);
+    color: var(--danger);
+  }
+  .card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+  .card .csub {
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .card p {
+    font-size: 13px;
+    color: var(--txt2);
+    line-height: 1.6;
+  }
+  .card ul {
+    list-style: none;
+    margin-top: 0.7rem;
+  }
+  .card ul li {
+    font-size: 12.5px;
+    color: var(--txt2);
+    padding: 5px 0 5px 18px;
+    position: relative;
+    border-bottom: 1px solid var(--bdr);
+  }
+  .card ul li:last-child {
+    border-bottom: none;
+  }
+  .card ul li::before {
+    content: "›";
+    position: absolute;
+    left: 3px;
+    color: var(--saffron);
+    font-weight: 700;
+  }
+
+  /* ── TABLE ── */
+  .tbl-wrap {
+    overflow-x: auto;
+    border-radius: var(--rl);
+    border: 1px solid var(--bdr);
+    box-shadow: var(--sh);
+    margin-bottom: 1.5rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  th {
+    background: var(--navy);
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--bdr);
+    color: var(--txt2);
+    background: #fff;
+    vertical-align: top;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+  tr:hover td {
+    background: var(--off);
+  }
+  td:first-child {
+    font-weight: 600;
+    color: var(--navy2);
+  }
+  .yes {
+    color: var(--green);
+    font-weight: 600;
+  }
+  .no {
+    color: var(--danger);
+    font-weight: 600;
+  }
+
+  /* ── PHASES ── */
+  .phase {
+    display: flex;
+    gap: 0;
+    margin-bottom: 0.9rem;
+  }
+  .ph-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 44px;
+    flex-shrink: 0;
+  }
+  .ph-dot {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    border: 2px solid;
+  }
+  .ph-dot.b {
+    background: var(--blue-lt);
+    color: var(--blue);
+    border-color: var(--blue);
+  }
+  .ph-dot.o {
+    background: var(--warn-lt);
+    color: var(--warn);
+    border-color: var(--saffron);
+  }
+  .ph-dot.g {
+    background: var(--green-lt);
+    color: var(--green);
+    border-color: var(--green);
+  }
+  .ph-line {
+    flex: 1;
+    width: 2px;
+    background: var(--bdr);
+    min-height: 20px;
+  }
+  .ph-body {
+    flex: 1;
+    background: #fff;
+    border: 1px solid var(--bdr);
+    border-radius: var(--rl);
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 0.9rem;
+    box-shadow: var(--sh);
+  }
+  .ph-body h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 3px;
+  }
+  .ph-meta {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .ph-steps {
+    list-style: none;
+  }
+  .ph-steps li {
+    font-size: 12.5px;
+    color: var(--txt2);
+    padding: 5px 0 5px 20px;
+    position: relative;
+    border-bottom: 1px dashed var(--bdr);
+  }
+  .ph-steps li:last-child {
+    border-bottom: none;
+  }
+  .ph-steps li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  /* ── CHECKLIST ── */
+  .cl-filters {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-bottom: 1.2rem;
+  }
+  .fb {
+    padding: 5px 13px;
+    border-radius: 20px;
+    border: 1px solid var(--bdr);
+    background: #fff;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--txt2);
+    font-family: inherit;
+    transition: all 0.18s;
+  }
+  .fb.on,
+  .fb:hover {
+    background: var(--navy);
+    color: #fff;
+    border-color: var(--navy);
+  }
+  .prog-wrap {
+    background: #fff;
+    border: 1px solid var(--bdr);
+    border-radius: var(--rl);
+    padding: 1.3rem;
+    margin-bottom: 1.3rem;
+    box-shadow: var(--sh);
+  }
+  .prog-hd {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .prog-hd h3 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .prog-hd span {
+    font-size: 14px;
+    color: var(--saffron);
+    font-weight: 700;
+  }
+  .prog-track {
+    height: 9px;
+    background: var(--off);
+    border-radius: 9px;
+    overflow: hidden;
+    border: 1px solid var(--bdr);
+  }
+  .prog-fill {
+    height: 100%;
+    border-radius: 9px;
+    background: linear-gradient(90deg, var(--green), var(--saffron));
+    transition: width 0.4s;
+  }
+  .prog-bd {
+    display: flex;
+    gap: 0.9rem;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .pb-i {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    color: var(--txt2);
+  }
+  .pb-d {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .cl-list {
+    list-style: none;
+  }
+  .ci {
+    background: #fff;
+    border: 1px solid var(--bdr);
+    border-radius: var(--r);
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 9px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.18s;
+    box-shadow: var(--sh);
+  }
+  .ci:hover {
+    border-color: var(--saffron);
+    box-shadow: 0 2px 14px rgba(255, 153, 51, 0.14);
+  }
+  .ci.done {
+    opacity: 0.6;
+    background: var(--off);
+  }
+  .ci.done .ci-title {
+    text-decoration: line-through;
+  }
+  .cb {
+    width: 21px;
+    height: 21px;
+    border-radius: 5px;
+    border: 2px solid var(--bdr);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    transition: all 0.2s;
+    margin-top: 2px;
+  }
+  .ci.done .cb {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+  .ci-body {
+    flex: 1;
+  }
+  .ci-hd {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin-bottom: 3px;
+  }
+  .ci-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .ci-desc {
+    font-size: 12px;
+    color: var(--txt2);
+    line-height: 1.55;
+  }
+  .ci-meta {
+    display: flex;
+    gap: 7px;
+    margin-top: 7px;
+    flex-wrap: wrap;
+  }
+  .cp {
+    font-size: 10.5px;
+    padding: 2px 7px;
+    border-radius: 20px;
+    background: var(--off);
+    color: var(--muted);
+    border: 1px solid var(--bdr);
+  }
+  .tag {
+    display: inline-block;
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .tag.c {
+    background: var(--danger-lt);
+    color: var(--danger);
+  }
+  .tag.h {
+    background: var(--warn-lt);
+    color: var(--warn);
+  }
+  .tag.m {
+    background: var(--blue-lt);
+    color: var(--blue);
+  }
+  .tag.l {
+    background: var(--green-lt);
+    color: var(--green);
+  }
+  .tag.n {
+    background: #ede7f6;
+    color: #4527a0;
+  }
+
+  /* ── CONSENT ── */
+  .consent-box {
+    background: #fff;
+    border: 2px solid var(--bdr);
+    border-radius: var(--rl);
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(10, 22, 40, 0.12);
+  }
+  .con-hdr {
+    background: var(--navy);
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .con-logo {
+    width: 26px;
+    height: 26px;
+    background: var(--saffron);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: var(--navy);
+    font-size: 11px;
+  }
+  .con-hdr h3 {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .con-body {
+    padding: 1.3rem 1.7rem;
+  }
+  .con-body h4 {
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--navy);
+  }
+  .con-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border: 1px solid var(--bdr);
+    border-radius: 8px;
+    margin-bottom: 7px;
+    font-size: 12.5px;
+    background: var(--off);
+  }
+  .tog {
+    width: 34px;
+    height: 18px;
+    border-radius: 18px;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .tog.on {
+    background: var(--green);
+  }
+  .tog.off {
+    background: #cbd5e0;
+  }
+  .tog::after {
+    content: "";
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #fff;
+    top: 2.5px;
+    transition: left 0.2s;
+  }
+  .tog.on::after {
+    left: 18px;
+  }
+  .tog.off::after {
+    left: 3px;
+  }
+  .con-txt {
+    flex: 1;
+  }
+  .con-txt b {
+    display: block;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .con-txt span {
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .req {
+    font-size: 9.5px;
+    color: var(--danger);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .con-btns {
+    display: flex;
+    gap: 9px;
+    margin-top: 1.1rem;
+  }
+  .btn-p {
+    flex: 1;
+    padding: 9px 0;
+    border-radius: 8px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+  .btn-p:hover {
+    background: var(--blue);
+  }
+  .btn-s {
+    flex: 1;
+    padding: 9px 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--txt2);
+    border: 1px solid var(--bdr);
+    font-size: 12.5px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  /* ── FOOTER ── */
+  .portal-footer {
+    background: var(--navy);
+    padding: 1.4rem 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border-top: 3px solid var(--saffron);
+  }
+  .f-left {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 11.5px;
+  }
+  .f-left b {
+    color: var(--saffron);
+  }
+  .f-links {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+  .f-link {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+    text-decoration: none;
+    padding: 6px 14px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    border-radius: 6px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .f-link:hover {
+    background: rgba(255, 153, 51, 0.15);
+    color: var(--saffron);
+  }
+  .f-link i {
+    font-size: 13px;
+  }
+
+  /* ── MODALS ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 22, 40, 0.72);
+    z-index: 999;
+    display: none;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2rem 1rem;
+    overflow-y: auto;
+  }
+  .modal-overlay.open {
+    display: flex;
+  }
+  .modal {
+    background: #fff;
+    border-radius: var(--rl);
+    max-width: 780px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 48px rgba(10, 22, 40, 0.3);
+    animation: slideUp 0.25s ease;
+  }
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .modal-hdr {
+    background: var(--navy);
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: var(--rl) var(--rl) 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .modal-hdr h2 {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .modal-hdr h2 .ico-sm {
+    width: 26px;
+    height: 26px;
+    background: rgba(255, 153, 51, 0.2);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+  .modal-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.18s;
+  }
+  .modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .modal-body {
+    padding: 1.6rem 1.8rem;
+  }
+
+  /* Privacy Policy styles */
+  .pp-section {
+    margin-bottom: 1.4rem;
+  }
+  .pp-section h3 {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .pp-section h3 span {
+    background: var(--blue-lt);
+    color: var(--blue);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .pp-section p {
+    font-size: 12.5px;
+    color: var(--txt2);
+    line-height: 1.65;
+  }
+  .pp-section ul {
+    list-style: none;
+    margin-top: 6px;
+  }
+  .pp-section ul li {
+    font-size: 12.5px;
+    color: var(--txt2);
+    padding: 3px 0 3px 16px;
+    position: relative;
+  }
+  .pp-section ul li::before {
+    content: "›";
+    position: absolute;
+    left: 2px;
+    color: var(--saffron);
+    font-weight: 700;
+  }
+  .pp-div {
+    height: 1px;
+    background: var(--bdr);
+    margin: 1.2rem 0;
+  }
+  .pp-stamp {
+    background: var(--off);
+    border: 1px solid var(--bdr);
+    border-radius: var(--r);
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .pp-stamp b {
+    color: var(--navy2);
+  }
+
+  /* Contact DPO styles */
+  .dpo-profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--navy);
+    border-radius: var(--r);
+    padding: 1rem 1.3rem;
+    margin-bottom: 1.3rem;
+  }
+  .dpo-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 153, 51, 0.2);
+    border: 2px solid var(--saffron);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .dpo-info h3 {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .dpo-info p {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 12px;
+  }
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 5px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--bdr);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--navy);
+    font-family: inherit;
+    background: #fff;
+    outline: none;
+    transition: border 0.18s;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--blue);
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+  }
+  .submit-btn {
+    width: 100%;
+    padding: 11px;
+    border-radius: 9px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+    margin-top: 0.5rem;
+  }
+  .submit-btn:hover {
+    background: var(--blue);
+  }
+  .form-success {
+    display: none;
+    background: var(--green-lt);
+    border: 1px solid var(--green);
+    border-radius: var(--r);
+    padding: 1rem 1.2rem;
+    text-align: center;
+  }
+  .form-success h3 {
+    color: var(--green);
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+  .form-success p {
+    color: #2e7d32;
+    font-size: 12.5px;
+  }
+  .contact-chips {
+    display: flex;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.3rem;
+  }
+  .chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--off);
+    border: 1px solid var(--bdr);
+    border-radius: 9px;
+    padding: 8px 13px;
+    font-size: 12px;
+    color: var(--txt2);
+    text-decoration: none;
+  }
+  .chip i {
+    color: var(--blue);
+    font-size: 14px;
+  }
+  .chip b {
+    color: var(--navy);
+    font-size: 12px;
+    display: block;
+  }
+
+  /* DPB styles */
+  .dpb-hero {
+    background: linear-gradient(135deg, #0d47a1, #1565c0);
+    border-radius: var(--r);
+    padding: 1.3rem 1.5rem;
+    margin-bottom: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .dpb-seal {
+    width: 54px;
+    height: 54px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    background: rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+  }
+  .dpb-hero h3 {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .dpb-hero p {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .dpb-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.9rem;
+    margin-bottom: 1.1rem;
+  }
+  .dpb-card {
+    background: #fff;
+    border: 1px solid var(--bdr);
+    border-radius: var(--r);
+    padding: 1rem;
+  }
+  .dpb-card h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .dpb-card p,
+  .dpb-card li {
+    font-size: 12px;
+    color: var(--txt2);
+    line-height: 1.6;
+  }
+  .dpb-card ul {
+    list-style: none;
+  }
+  .dpb-card ul li {
+    padding: 3px 0 3px 16px;
+    position: relative;
+  }
+  .dpb-card ul li::before {
+    content: "›";
+    position: absolute;
+    left: 2px;
+    color: var(--saffron);
+    font-weight: 700;
+  }
+  .timeline {
+    list-style: none;
+  }
+  .tl-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 0.7rem;
+  }
+  .tl-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1.5px solid;
+  }
+  .tl-dot.r {
+    background: var(--danger-lt);
+    color: var(--danger);
+    border-color: var(--danger);
+  }
+  .tl-dot.o {
+    background: var(--warn-lt);
+    color: var(--warn);
+    border-color: var(--saffron);
+  }
+  .tl-dot.g {
+    background: var(--green-lt);
+    color: var(--green);
+    border-color: var(--green);
+  }
+  .tl-txt {
+    flex: 1;
+    padding-top: 4px;
+  }
+  .tl-txt b {
+    font-size: 12.5px;
+    color: var(--navy);
+    font-weight: 600;
+    display: block;
+  }
+  .tl-txt span {
+    font-size: 11.5px;
+    color: var(--txt2);
+  }
+  .dpb-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--blue-lt);
+    border: 1px solid rgba(0, 53, 128, 0.15);
+    border-radius: var(--r);
+    padding: 0.9rem 1.1rem;
+    text-decoration: none;
+    margin-bottom: 0.8rem;
+    transition: all 0.18s;
+  }
+  .dpb-link:hover {
+    border-color: var(--blue);
+    background: #d6e8ff;
+  }
+  .dpb-link-l {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .dpb-link-l i {
+    font-size: 18px;
+    color: var(--blue);
+  }
+  .dpb-link-l b {
+    font-size: 13px;
+    color: var(--navy);
+    display: block;
+    font-weight: 600;
+  }
+  .dpb-link-l span {
+    font-size: 11.5px;
+    color: var(--txt2);
+  }
+  .dpb-link i.arr {
+    color: var(--blue);
+    font-size: 16px;
+  }
+
+  /* PDF download panel */
+  .pdf-hero {
+    background: linear-gradient(135deg, #1b5e20, #2e7d32);
+    border-radius: var(--r);
+    padding: 1.3rem 1.5rem;
+    margin-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .pdf-icon {
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+  .pdf-hero h3 {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .pdf-hero p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .pdf-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    margin-bottom: 1.2rem;
+  }
+  .pdf-m {
+    background: var(--off);
+    border: 1px solid var(--bdr);
+    border-radius: var(--r);
+    padding: 0.8rem;
+    text-align: center;
+  }
+  .pdf-m .n {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .pdf-m .l {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .pdf-contents {
+    margin-bottom: 1.3rem;
+  }
+  .pdf-contents h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.7rem;
+  }
+  .pdf-toc {
+    list-style: none;
+  }
+  .pdf-toc li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7px 0;
+    border-bottom: 1px solid var(--bdr);
+    font-size: 12.5px;
+    color: var(--txt2);
+  }
+  .pdf-toc li:last-child {
+    border-bottom: none;
+  }
+  .pdf-toc li b {
+    color: var(--navy2);
+    font-weight: 500;
+  }
+  .pdf-toc li span {
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .dl-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    transition: background 0.2s;
+  }
+  .dl-btn:hover {
+    background: #1b5e20;
+  }
+  .dl-btn i {
+    font-size: 18px;
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link
+  href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
+/>
+
+<h2 class="sr-only">
+  DPDP Act 2023 Government Compliance Portal — Interactive Guide and Checklist
+</h2>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <div class="tb-left">
+    <span class="tb-title"><b>DPDP Compliance Reference Portal</b></span>
+  </div>
+  <span class="badge">DPDP Act 2023 · Rules 2025</span>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-eye">
+    <div class="ln"></div>
+    <span>Digital Personal Data Protection</span>
+    <div class="ln"></div>
+  </div>
+  <h1>Implement <em>DPDP Act 2023</em><br />& Rules 2025 — Zero Code Change</h1>
+  <p>
+    A structured guideline, roadmap, and interactive checklist for Government
+    Departments providing citizen services — achieve compliance with minimal or
+    no modifications to existing web applications.
+  </p>
+  <div class="stats">
+    <div class="stat">
+      <div class="n">8</div>
+      <div class="l">Rights of<br />Data Principals</div>
+    </div>
+    <div class="stat">
+      <div class="n">6</div>
+      <div class="l">Key Obligations<br />on Fiduciaries</div>
+    </div>
+    <div class="stat">
+      <div class="n">21</div>
+      <div class="l">Checklist<br />Items</div>
+    </div>
+    <div class="stat">
+      <div class="n">3</div>
+      <div class="l">Implementation<br />Phases</div>
+    </div>
+  </div>
+</header>
+
+<!-- TABS -->
+<div class="tabs" role="tablist">
+  <button class="tab on" onclick="tab('overview', this)">Overview</button>
+  <button class="tab" onclick="tab('roadmap', this)">Roadmap</button>
+  <button class="tab" onclick="tab('checklist', this)">
+    Compliance Checklist
+  </button>
+  <button class="tab" onclick="tab('consent', this)">Consent Module</button>
+  <button class="tab" onclick="tab('rights', this)">Citizen Rights</button>
+  <button class="tab" onclick="tab('exemptions', this)">Exemptions</button>
+</div>
+
+<!-- CONTENT -->
+<main class="content">
+  <!-- OVERVIEW -->
+  <section class="panel on" id="p-overview">
+    <div class="sh">
+      <h2>Key Concepts & Obligations</h2>
+      <p>
+        Critical definitions, roles, and government-specific applicability under
+        DPDP Act 2023.
+      </p>
+    </div>
+    <div class="note info">
+      <div>
+        <strong>Government Context</strong>The DPDP Act applies to Govt
+        Departments processing personal data of citizens in digital form.
+        Section 17 provides specific exemptions for State instrumentalities.
+        Departments should map each service to determine applicability before
+        starting compliance work.
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico b">🏛️</div>
+          <div>
+            <h3>Data Fiduciary (Your Dept.)</h3>
+            <div class="csub">Section 2(i) — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Any Govt Department that determines the purpose and means of
+          processing personal data of citizens. Includes Ministries, State
+          Depts, PSUs, Autonomous Bodies.
+        </p>
+        <ul>
+          <li>Collect only for specified, explicit purpose</li>
+          <li>Provide privacy notice before or at collection</li>
+          <li>Ensure accuracy and completeness of data</li>
+          <li>Implement appropriate security safeguards</li>
+          <li>Respond to citizen rights requests within 72 hrs</li>
+          <li>Report breaches to Data Protection Board</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico o">👤</div>
+          <div>
+            <h3>Data Principal (Citizen)</h3>
+            <div class="csub">Section 2(j) — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          The individual (citizen) to whom personal data relates. Has statutory
+          rights the Government portal must honour. In case of a minor, the
+          parent/guardian is the Data Principal.
+        </p>
+        <ul>
+          <li>Right to access information about data processing</li>
+          <li>Right to correction and erasure</li>
+          <li>Right to grievance redressal</li>
+          <li>Right to nominate a nominee</li>
+          <li>Consent can be withdrawn at any time</li>
+          <li>Right to know if data shared with third parties</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico g">📋</div>
+          <div>
+            <h3>Personal Data — What's Covered</h3>
+            <div class="csub">Section 2(t) — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Any data about an identifiable individual. Government portals
+          routinely handle vast amounts across citizen services.
+        </p>
+        <ul>
+          <li>Name, address, phone number, email</li>
+          <li>Aadhaar, PAN, Voter ID, Passport numbers</li>
+          <li>Biometric data collected during service delivery</li>
+          <li>Health, income, caste certificate data</li>
+          <li>IP addresses, device IDs, usage logs</li>
+          <li>Bank account & financial details</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico r">⚠️</div>
+          <div>
+            <h3>Penalties for Non-Compliance</h3>
+            <div class="csub">Section 33 — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Data Protection Board can levy significant penalties. Government
+          Departments are not fully exempt.
+        </p>
+        <ul>
+          <li>Failure of security safeguards: up to ₹250 Cr</li>
+          <li>Failure to notify breach: up to ₹200 Cr</li>
+          <li>Violation of children's data provisions: up to ₹200 Cr</li>
+          <li>Non-compliance with DPB directions: up to ₹150 Cr</li>
+          <li>Breach of other obligations: up to ₹50 Cr</li>
+        </ul>
+      </div>
+    </div>
+    <div class="sh" style="margin-top: 1rem">
+      <h2>Act vs Rules — Comparison</h2>
+      <p>
+        What is set by the Act and what is operationalised through Rules 2025
+      </p>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Aspect</th>
+            <th>DPDP Act 2023</th>
+            <th>DPDP Rules 2025</th>
+            <th>Govt Dept Impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Consent Notice</td>
+            <td>Mandates notice before collection</td>
+            <td>Specifies format, language requirements (all 22 languages)</td>
+            <td>Update notice templates</td>
+          </tr>
+          <tr>
+            <td>Consent Withdrawal</td>
+            <td>Must be easy as giving consent</td>
+            <td>Specifies Consent Manager framework & API</td>
+            <td>Integrate withdrawal mechanism</td>
+          </tr>
+          <tr>
+            <td>Data Retention</td>
+            <td>Erase when purpose is served</td>
+            <td>Specifies timelines per category</td>
+            <td>Define retention schedules</td>
+          </tr>
+          <tr>
+            <td>Security Safeguards</td>
+            <td>Appropriate technical measures</td>
+            <td>Specifies security standards & audit requirements</td>
+            <td>Conduct annual security audit</td>
+          </tr>
+          <tr>
+            <td>Grievance Redressal</td>
+            <td>Must appoint Grievance Officer</td>
+            <td>48-hour acknowledgement, 30-day resolution</td>
+            <td>Appoint DPO / nodal officer</td>
+          </tr>
+          <tr>
+            <td>Children's Data</td>
+            <td>Parental consent for under-18</td>
+            <td>Age verification method prescribed</td>
+            <td>Add age gate to forms</td>
+          </tr>
+          <tr>
+            <td>Data Breach</td>
+            <td>Notify DPB & affected principals</td>
+            <td>72 hrs to DPB, 7 days to principals</td>
+            <td>Create breach notification SOP</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section class="panel" id="p-roadmap">
+    <div class="sh">
+      <h2>3-Phase Implementation Roadmap</h2>
+      <p>
+        Achieve full DPDP compliance in 16 weeks — Phase 1 requires zero code
+        change; Phases 2 & 3 involve minimal configuration-level work.
+      </p>
+    </div>
+    <div class="note warn">
+      <div>
+        <strong>Zero-Code Principle</strong>Most DPDP obligations can be met
+        through policy documents, consent overlays injected via tag managers,
+        and separate privacy dashboards — without modifying the core application
+        codebase.
+      </div>
+    </div>
+    <div id="phases-container">
+      <div class="phase">
+        <div class="ph-col">
+          <div class="ph-dot b">1</div>
+          <div class="ph-line"></div>
+        </div>
+        <div class="ph-body">
+          <h3>Phase 1 — Assess, Document & Policy (Weeks 1–4)</h3>
+          <div class="ph-meta">
+            ⏱ 0 code changes required · All departments must start here
+          </div>
+          <ul class="ph-steps">
+            <li>
+              Conduct Data Mapping: list all forms, APIs, databases that collect
+              personal data
+            </li>
+            <li>
+              Classify data categories: general, sensitive, children's data
+            </li>
+            <li>
+              Identify existing legal bases: statutory obligation, public
+              function, or consent
+            </li>
+            <li>
+              Draft / update Privacy Policy document (standalone page on portal)
+            </li>
+            <li>
+              Draft Notice Template for each data collection form (can be
+              PDF/static page)
+            </li>
+            <li>
+              Appoint a Data Protection Officer (DPO) or Grievance Redressal
+              Officer
+            </li>
+            <li>Create Data Retention & Deletion Schedule per data category</li>
+            <li>
+              Identify all third-party service providers and review agreements
+            </li>
+            <li>
+              Register with the Data Protection Board when registration portal
+              is live
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="ph-col">
+          <div class="ph-dot o">2</div>
+          <div class="ph-line"></div>
+        </div>
+        <div class="ph-body">
+          <h3>Phase 2 — Consent Layer & Notice Injection (Weeks 5–10)</h3>
+          <div class="ph-meta">
+            ⚙️ Configuration-level only — tag manager or reverse proxy injection
+          </div>
+          <ul class="ph-steps">
+            <li>
+              Deploy a Consent Management Platform (CMP) via Google Tag Manager
+              or NIC's solution
+            </li>
+            <li>
+              Inject consent banner/overlay on entry to all service portals — no
+              backend change needed
+            </li>
+            <li>
+              Link "Privacy Notice" to each form's submission button via
+              JavaScript overlay
+            </li>
+            <li>
+              Implement consent withdrawal link in portal header (links to
+              separate consent dashboard)
+            </li>
+            <li>
+              Add cookie consent banner for analytics/tracking cookies
+              (configurable via CMP)
+            </li>
+            <li>
+              Enable multilingual notice display using existing i18n framework
+              or CMP feature
+            </li>
+            <li>
+              Set up separate Grievance Redressal web form (can be a standalone
+              microsite)
+            </li>
+            <li>
+              Add "Request my data / Delete my data" links in user account
+              section
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="ph-col"><div class="ph-dot g">3</div></div>
+        <div class="ph-body">
+          <h3>Phase 3 — Rights Fulfilment & Audit (Weeks 11–16)</h3>
+          <div class="ph-meta">
+            🔒 Minimal code — separate privacy microsite handles citizen
+            requests
+          </div>
+          <ul class="ph-steps">
+            <li>
+              Build standalone Privacy Dashboard (a separate application, not
+              touching core app)
+            </li>
+            <li>
+              Implement right to access: generate data summary report for
+              citizen on request
+            </li>
+            <li>
+              Implement right to correction: internal workflow to update records
+              on citizen request
+            </li>
+            <li>
+              Implement right to erasure: define erasure scope (exclude
+              mandatory statutory records)
+            </li>
+            <li>
+              Implement nomination feature: form for citizen to nominate data
+              representative
+            </li>
+            <li>
+              Create Data Breach Response SOP and test notification mechanism
+            </li>
+            <li>
+              Conduct first annual security audit (CERT-In empanelled auditor)
+            </li>
+            <li>
+              Staff training for DPO, grievance officers, and front-line teams
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="grid" style="margin-top: 1rem">
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico b">🛡️</div>
+          <div>
+            <h3>No-Code Tools Allowed</h3>
+            <div class="csub">Achieve compliance without touching core app</div>
+          </div>
+        </div>
+        <ul>
+          <li>Google Tag Manager / NIC Tag Manager for consent banners</li>
+          <li>
+            Nginx/Apache reverse proxy for injecting privacy headers & notices
+          </li>
+          <li>Standalone microsite for Privacy Dashboard (separate domain)</li>
+          <li>ServiceNow / CRM for Grievance Redressal workflow</li>
+          <li>PDF consent notice linked from existing forms</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico o">📄</div>
+          <div>
+            <h3>Legal Basis: Statutory Function</h3>
+            <div class="csub">Key advantage for Govt Departments</div>
+          </div>
+        </div>
+        <p>
+          Govt Departments performing
+          <strong>statutory / sovereign functions</strong> may rely on Section
+          7(c) rather than consent for mandatory data collection (e.g., tax
+          filing, ration card, pension).
+        </p>
+        <ul>
+          <li>Map each service to its enabling statute</li>
+          <li>Notice still required — only consent mechanism differs</li>
+          <li>Cannot process beyond the statutory purpose</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKLIST -->
+  <section class="panel" id="p-checklist">
+    <div class="sh">
+      <h2>Interactive Compliance Checklist</h2>
+      <p>
+        Click items to mark complete. Filter by category or priority. Track your
+        department's readiness score.
+      </p>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog-hd">
+        <h3>Compliance Readiness Score</h3>
+        <span id="pct">0%</span>
+      </div>
+      <div class="prog-track">
+        <div class="prog-fill" id="fill" style="width: 0%"></div>
+      </div>
+      <div class="prog-bd">
+        <div class="pb-i">
+          <div class="pb-d" style="background: var(--danger)"></div>
+          <span id="cnt-c">0 Critical done</span>
+        </div>
+        <div class="pb-i">
+          <div class="pb-d" style="background: var(--warn)"></div>
+          <span id="cnt-h">0 High done</span>
+        </div>
+        <div class="pb-i">
+          <div class="pb-d" style="background: var(--blue)"></div>
+          <span id="cnt-m">0 Medium done</span>
+        </div>
+        <div class="pb-i">
+          <div class="pb-d" style="background: var(--green)"></div>
+          <span id="cnt-l">0 Low done</span>
+        </div>
+      </div>
+    </div>
+    <div class="cl-filters">
+      <button class="fb on" onclick="filter('all', this)">All Items</button>
+      <button class="fb" onclick="filter('critical', this)">🔴 Critical</button>
+      <button class="fb" onclick="filter('high', this)">🟠 High</button>
+      <button class="fb" onclick="filter('medium', this)">🔵 Medium</button>
+      <button class="fb" onclick="filter('low', this)">🟢 Low</button>
+      <button class="fb" onclick="filter('policy', this)">Policy</button>
+      <button class="fb" onclick="filter('technical', this)">Technical</button>
+      <button class="fb" onclick="filter('legal', this)">Legal</button>
+    </div>
+    <ul class="cl-list" id="cl"></ul>
+  </section>
+
+  <!-- CONSENT -->
+  <section class="panel" id="p-consent">
+    <div class="sh">
+      <h2>Consent Management Module</h2>
+      <p>
+        Ready-to-deploy consent notice framework — implements Rules 2025
+        requirements on notice format and consent withdrawal.
+      </p>
+    </div>
+    <div class="note ok">
+      <div>
+        <strong>Implementation Note</strong>The consent module below can be
+        deployed as a standalone JavaScript overlay injected via tag manager —
+        no changes to your existing application code required. It integrates
+        with any portal via a single script tag.
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico b">📋</div>
+          <div>
+            <h3>Consent Notice — Rules 2025 Requirements</h3>
+            <div class="csub">Rule 3 — Mandatory elements in notice</div>
+          </div>
+        </div>
+        <ul>
+          <li>
+            Name & contact of Data Fiduciary (Dept name, address, DPO email)
+          </li>
+          <li>Purpose of each data element being collected</li>
+          <li>Categories of personal data collected</li>
+          <li>Whether data will be shared & with whom</li>
+          <li>Period for which data will be retained</li>
+          <li>How citizen can exercise their rights</li>
+          <li>Link to full privacy policy</li>
+          <li>Available in all 22 scheduled languages</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico o">⚡</div>
+          <div>
+            <h3>Consent is NOT Required For</h3>
+            <div class="csub">Section 7 exemptions — Govt specific</div>
+          </div>
+        </div>
+        <p style="margin-bottom: 0.6rem">
+          Government Departments can rely on legitimate bases other than consent
+          for mandatory citizen services:
+        </p>
+        <ul>
+          <li>
+            <strong>State function under law:</strong> Tax filing, PAN, pension,
+            election ID
+          </li>
+          <li>
+            <strong>Medical emergency:</strong> Health data during emergencies
+          </li>
+          <li>
+            <strong>Disaster/public order:</strong> Data for disaster relief
+            operations
+          </li>
+          <li>
+            <strong>Employment / payroll:</strong> Govt employee data for
+            salary, benefits
+          </li>
+          <li>
+            <strong>Judicial proceedings:</strong> Data required by courts or
+            tribunals
+          </li>
+        </ul>
+        <div
+          class="note warn"
+          style="margin-top: 0.8rem; margin-bottom: 0; font-size: 11.5px"
+        >
+          Notice is still mandatory even when consent is not required.
+        </div>
+      </div>
+    </div>
+    <div class="sh" style="margin-top: 1rem">
+      <h2>Live Consent Notice Preview</h2>
+      <p>
+        Interactive mockup of a DPDP-compliant consent notice for a citizen
+        portal
+      </p>
+    </div>
+    <div class="consent-box">
+      <div class="con-hdr">
+        <div class="con-logo">GOI</div>
+        <h3>Data Privacy Notice — Ministry of Food & Consumer Affairs</h3>
+      </div>
+      <div class="con-body">
+        <p style="font-size: 12.5px; color: var(--txt2); margin-bottom: 1rem">
+          We collect your personal data to process your ration card application
+          under the National Food Security Act, 2013. Please review how your
+          data will be used and provide your preferences below.
+        </p>
+        <h4>Purpose-wise Consent</h4>
+        <div class="con-row">
+          <button class="tog on" onclick="tog(this)"></button>
+          <div class="con-txt">
+            <b>Eligibility Verification</b
+            ><span
+              >Cross-check income & family data with Aadhaar/SECC database</span
+            >
+          </div>
+          <span class="req">Mandatory</span>
+        </div>
+        <div class="con-row">
+          <button class="tog on" onclick="tog(this)"></button>
+          <div class="con-txt">
+            <b>SMS/Email Notifications</b
+            ><span
+              >Delivery alerts, card status updates, scheme announcements</span
+            >
+          </div>
+        </div>
+        <div class="con-row">
+          <button class="tog off" onclick="tog(this)"></button>
+          <div class="con-txt">
+            <b>Research & Policy Analysis</b
+            ><span
+              >Anonymised data shared with NITI Aayog for welfare programme
+              analysis</span
+            >
+          </div>
+        </div>
+        <div class="con-row">
+          <button class="tog off" onclick="tog(this)"></button>
+          <div class="con-txt">
+            <b>Inter-departmental Data Sharing</b
+            ><span>Share beneficiary data with State Civil Supplies Dept</span>
+          </div>
+        </div>
+        <p style="font-size: 11px; color: var(--muted); margin-top: 0.9rem">
+          Your data will be retained for 7 years as per the National Food
+          Security Act. You can withdraw consent, request data access, or raise
+          a grievance by contacting our DPO at <b>dpo-mofca@gov.in</b> or
+          calling <b>1800-xxx-xxxx</b>.
+        </p>
+        <div class="con-btns">
+          <button class="btn-p">Confirm Preferences & Submit</button
+          ><button class="btn-s">Download Notice (PDF)</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGHTS -->
+  <section class="panel" id="p-rights">
+    <div class="sh">
+      <h2>8 Rights of Citizens (Data Principals)</h2>
+      <p>
+        Sections 11–16 of DPDP Act 2023. Government Departments must provide
+        mechanisms to fulfil each right — most can be implemented as a separate
+        grievance/request portal.
+      </p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico b">📂</div>
+          <div>
+            <h3>Right to Access Information</h3>
+            <div class="csub">Section 11 — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Citizen can request a summary of personal data being processed, the
+          purposes, and list of Data Processors/entities with whom data is
+          shared.
+        </p>
+        <ul>
+          <li>Respond within 30 days of request</li>
+          <li>Provide data in readable format (PDF / email)</li>
+          <li>No fee chargeable (first request)</li>
+          <li>
+            Implementation: Standalone request form + manual/semi-automated
+            report
+          </li>
+        </ul>
+        <div style="margin-top: 8px">
+          <span class="tag l">Separate portal</span>
+          <span class="tag m">30-day SLA</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico o">✏️</div>
+          <div>
+            <h3>Right to Correction & Erasure</h3>
+            <div class="csub">Section 12 — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Citizen can demand correction of inaccurate, incomplete, or outdated
+          data; or erasure when data is no longer needed or consent is
+          withdrawn.
+        </p>
+        <ul>
+          <li>
+            Government can refuse erasure where retention is mandatory under law
+          </li>
+          <li>Correction workflow: DPO reviews → updates → informs citizen</li>
+          <li>Implementation: Grievance form + internal ticketing system</li>
+          <li>Must inform other Data Processors of the correction</li>
+        </ul>
+        <div style="margin-top: 8px">
+          <span class="tag h">High priority</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico g">🚫</div>
+          <div>
+            <h3>Right to Withdraw Consent</h3>
+            <div class="csub">Section 13 — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Citizen can withdraw consent given earlier. Withdrawal does not affect
+          legality of processing done before withdrawal.
+        </p>
+        <ul>
+          <li>Must be as easy as giving consent</li>
+          <li>Process within 30 days of withdrawal</li>
+          <li>Department may stop optional services post-withdrawal</li>
+          <li>
+            Implementation: Link in portal header → Consent Dashboard microsite
+          </li>
+        </ul>
+        <div style="margin-top: 8px"><span class="tag c">Critical</span></div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico b">🛡️</div>
+          <div>
+            <h3>Right to Grievance Redressal</h3>
+            <div class="csub">Section 14 — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Citizen can file a grievance against any violation of their rights
+          under the Act. Rules mandate 48-hour acknowledgement and 30-day
+          resolution.
+        </p>
+        <ul>
+          <li>
+            Appoint Grievance Redressal Officer (GRO) — must be Indian resident
+          </li>
+          <li>Publish GRO name, email, address on portal</li>
+          <li>Acknowledge within 48 hours, resolve within 30 days</li>
+          <li>Implementation: Separate web form or CPGRAMS integration</li>
+        </ul>
+        <div style="margin-top: 8px"><span class="tag c">Critical</span></div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico o">⚖️</div>
+          <div>
+            <h3>Right to Appeal to DPB</h3>
+            <div class="csub">Section 15 — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          If grievance is not resolved satisfactorily, citizen can appeal to the
+          Data Protection Board of India.
+        </p>
+        <ul>
+          <li>Citizen must first exhaust grievance with the Department</li>
+          <li>
+            Departments must respond to DPB notices within prescribed time
+          </li>
+          <li>
+            Implementation: Ensure grievance records are archived for DPB
+            inspection
+          </li>
+        </ul>
+        <div style="margin-top: 8px"><span class="tag h">High</span></div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico g">👤</div>
+          <div>
+            <h3>Right to Nominate</h3>
+            <div class="csub">Section 16 — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Citizen can nominate another individual to exercise their data rights
+          on their behalf in case of death or incapacity.
+        </p>
+        <ul>
+          <li>Nomination can be done at time of consent or anytime later</li>
+          <li>Nominee must be verified and authenticated</li>
+          <li>Relevant particularly for elderly/differently-abled citizens</li>
+          <li>Implementation: Optional field in privacy dashboard</li>
+        </ul>
+        <div style="margin-top: 8px"><span class="tag l">Phase 3</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXEMPTIONS -->
+  <section class="panel" id="p-exemptions">
+    <div class="sh">
+      <h2>Government Exemptions & Special Clauses</h2>
+      <p>
+        Section 17 of DPDP Act 2023 — Specific provisions that apply to Central
+        and State Government entities.
+      </p>
+    </div>
+    <div class="note bad">
+      <div>
+        <strong>Important</strong>Exemptions are narrow and must be invoked
+        correctly. Blanket reliance on exemptions without documentation exposes
+        Departments to regulatory risk. Each exemption invocation must be
+        justified and recorded.
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico b">🔐</div>
+          <div>
+            <h3>National Security Exemption</h3>
+            <div class="csub">Section 17(1)(a) — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Central Govt may exempt any instrumentality in the interest of
+          sovereignty, integrity, security, friendly foreign relations, or
+          public order.
+        </p>
+        <ul>
+          <li>Must be notified by Central Government via official order</li>
+          <li>Cannot be self-invoked by individual departments</li>
+          <li>Applies to intelligence agencies, defence, border security</li>
+        </ul>
+        <div style="margin-top: 8px">
+          <span class="tag n">Central Govt Only</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico o">🔬</div>
+          <div>
+            <h3>Research & Statistics Exemption</h3>
+            <div class="csub">Section 17(2)(a) — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Data processed for research, archiving, or statistical purposes is
+          exempt from certain obligations provided appropriate safeguards are in
+          place.
+        </p>
+        <ul>
+          <li>Must be anonymised or pseudonymised wherever possible</li>
+          <li>
+            Cannot identify or profile specific citizens from research output
+          </li>
+          <li>Applicable to: Census, NSSO surveys, ICMR health research</li>
+        </ul>
+        <div style="margin-top: 8px">
+          <span class="tag m">Conditional</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico g">⚖️</div>
+          <div>
+            <h3>Judicial / Legal Proceedings</h3>
+            <div class="csub">Section 17(2)(b) — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Processing of personal data for enforcement of legal rights, claims,
+          or in connection with judicial or quasi-judicial proceedings is exempt
+          from consent requirements.
+        </p>
+        <ul>
+          <li>Applies to: Courts, Tribunals, Law Enforcement, CBI, ED</li>
+          <li>Must be proportional to the purpose</li>
+          <li>Data must not be retained beyond proceeding completion</li>
+        </ul>
+        <div style="margin-top: 8px">
+          <span class="tag m">With conditions</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-hd">
+          <div class="ico r">📢</div>
+          <div>
+            <h3>Publicly Available Data</h3>
+            <div class="csub">Section 3(c) — DPDPA 2023</div>
+          </div>
+        </div>
+        <p>
+          Personal data that has been made public by the Data Principal
+          themselves does not require fresh consent for processing.
+        </p>
+        <ul>
+          <li>The data principal must have voluntarily made it public</li>
+          <li>Government-published data (gazette) qualifies</li>
+          <li>Cannot be repurposed beyond original publication scope</li>
+        </ul>
+        <div style="margin-top: 8px">
+          <span class="tag l">Narrow scope</span>
+        </div>
+      </div>
+    </div>
+    <div class="note info">
+      <div>
+        <strong>Best Practice for Govt Departments</strong>Even where exemptions
+        apply, maintain Privacy Notices, appoint a DPO, implement security
+        safeguards, and create a grievance mechanism. This builds citizen trust
+        and protects the Department in case of regulatory scrutiny.
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="portal-footer">
+  <div class="f-left">
+    <b>DPDP Compliance Portal</b> · For Government Departments<br />Reference:
+    Digital Personal Data Protection Act 2023 & DPDP Rules 2025
+  </div>
+  <div class="f-links">
+    <button class="f-link" onclick="openModal('privacy')">
+      <i class="ti ti-shield-lock" aria-hidden="true"></i> Privacy Policy
+    </button>
+    <button class="f-link" onclick="openModal('pdf')">
+      <i class="ti ti-file-download" aria-hidden="true"></i> Download PDF Guide
+    </button>
+    <button class="f-link" onclick="openModal('dpo')">
+      <i class="ti ti-user-shield" aria-hidden="true"></i> Contact DPO
+    </button>
+    <button class="f-link" onclick="openModal('dpb')">
+      <i class="ti ti-building-bank" aria-hidden="true"></i> Data Protection
+      Board
+    </button>
+  </div>
+</footer>
+
+<!-- ═══ MODAL: PRIVACY POLICY ═══ -->
+<div
+  class="modal-overlay"
+  id="modal-privacy"
+  onclick="closeOnBg(event, 'privacy')"
+>
+  <div class="modal" role="dialog" aria-label="Privacy Policy">
+    <div class="modal-hdr">
+      <h2>
+        <div class="ico-sm">🛡️</div>
+        Privacy Policy — DPDP Compliance Portal
+      </h2>
+      <button
+        class="modal-close"
+        onclick="closeModal('privacy')"
+        aria-label="Close"
+      >
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="pp-stamp">
+        <div><b>Version</b><br />1.0 (2025)</div>
+        <div><b>Effective Date</b><br />01 January 2025</div>
+        <div><b>Last Reviewed</b><br />01 April 2025</div>
+        <div><b>Next Review</b><br />01 January 2026</div>
+        <div><b>DPO</b><br />dpo-meity@gov.in</div>
+      </div>
+      <div class="pp-div"></div>
+      <div class="pp-section">
+        <h3><span>1</span>About This Policy</h3>
+        <p>
+          This Privacy Policy explains how the Ministry of Electronics and
+          Information Technology (MeitY), Government of India ("we", "the
+          Department") collects, uses, shares, and retains personal data of
+          users ("citizens", "Data Principals") who access this DPDP Compliance
+          Portal, in accordance with the Digital Personal Data Protection Act,
+          2023 and DPDP Rules, 2025.
+        </p>
+      </div>
+      <div class="pp-section">
+        <h3><span>2</span>What Personal Data We Collect</h3>
+        <ul>
+          <li>Name, designation, department name and official email address</li>
+          <li>Phone number (for OTP-based login or grievance contact)</li>
+          <li>
+            Device information: IP address, browser type, operating system
+          </li>
+          <li>
+            Usage data: pages visited, time spent, checklist completion status
+            (stored locally)
+          </li>
+          <li>Form submissions: grievance forms and DPO contact queries</li>
+        </ul>
+      </div>
+      <div class="pp-section">
+        <h3><span>3</span>Purpose of Data Collection</h3>
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Data Element</th>
+                <th>Purpose</th>
+                <th>Legal Basis</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Name & Email</td>
+                <td>
+                  User authentication, grievance response, DPO correspondence
+                </td>
+                <td>Statutory function / Consent</td>
+              </tr>
+              <tr>
+                <td>Department Name</td>
+                <td>Tailored compliance guidance and reporting</td>
+                <td>Statutory function</td>
+              </tr>
+              <tr>
+                <td>IP Address</td>
+                <td>Security monitoring, fraud prevention</td>
+                <td>Legitimate interest</td>
+              </tr>
+              <tr>
+                <td>Usage Logs</td>
+                <td>Portal performance analytics (anonymised)</td>
+                <td>Consent via cookie banner</td>
+              </tr>
+              <tr>
+                <td>Grievance Form Data</td>
+                <td>Processing and resolving data protection grievances</td>
+                <td>Statutory function</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="pp-section">
+        <h3><span>4</span>Data Sharing & Third Parties</h3>
+        <p>
+          We do not sell, rent, or share your personal data with commercial
+          third parties. Data may be shared with:
+        </p>
+        <ul>
+          <li>
+            National Informatics Centre (NIC) — hosting and infrastructure
+          </li>
+          <li>
+            Data Protection Board of India — in case of formal complaint or
+            inquiry
+          </li>
+          <li>CERT-In — for cybersecurity incident response</li>
+          <li>
+            Other Central Government Departments — only where legally required
+          </li>
+        </ul>
+      </div>
+      <div class="pp-section">
+        <h3><span>5</span>Data Retention</h3>
+        <ul>
+          <li>Authentication logs: 90 days</li>
+          <li>Grievance records: 5 years (as per Public Records Act)</li>
+          <li>Usage analytics (anonymised): 24 months</li>
+          <li>DPO correspondence: 3 years</li>
+          <li>All data deleted or anonymised after retention period expires</li>
+        </ul>
+      </div>
+      <div class="pp-section">
+        <h3><span>6</span>Your Rights as a Data Principal</h3>
+        <p>
+          Under the DPDP Act 2023, you have the right to: (a) access personal
+          data held about you; (b) correct inaccurate or outdated data; (c)
+          request erasure of data no longer required; (d) withdraw consent at
+          any time; (e) file a grievance with the DPO; and (f) appeal to the
+          Data Protection Board if your grievance is not resolved.
+        </p>
+      </div>
+      <div class="pp-section">
+        <h3><span>7</span>Security Measures</h3>
+        <p>
+          We implement appropriate technical and organisational measures
+          including SSL/TLS encryption, role-based access controls, annual
+          CERT-In empanelled security audits, data minimisation practices, and
+          incident response procedures aligned with DPDP Rules 2025 (Rule 6 &
+          7).
+        </p>
+      </div>
+      <div class="pp-section">
+        <h3><span>8</span>Cookies</h3>
+        <p>
+          This portal uses: (a) Essential cookies — required for session
+          management and security, exempt from consent; (b) Analytics cookies —
+          used to understand portal usage, only with your explicit consent via
+          the cookie banner. You may withdraw cookie consent at any time via the
+          cookie settings link in the footer.
+        </p>
+      </div>
+      <div class="pp-section">
+        <h3><span>9</span>Contact & Grievances</h3>
+        <p>
+          For any privacy-related concerns, contact our Data Protection Officer:
+          <b>dpo-meity@gov.in</b> | Telephone: <b>1800-111-555</b> (Toll-free) |
+          Data Protection Officer, MeitY, Electronics Niketan, 6 CGO Complex,
+          Lodhi Road, New Delhi — 110 003.
+        </p>
+      </div>
+      <div class="pp-div"></div>
+      <div style="display: flex; gap: 0.8rem">
+        <button class="btn-p" style="flex: 1" onclick="closeModal('privacy')">
+          <i class="ti ti-check"></i> Understood
+        </button>
+        <button class="btn-s" style="flex: 1">Download PDF Version</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: PDF DOWNLOAD ═══ -->
+<div class="modal-overlay" id="modal-pdf" onclick="closeOnBg(event, 'pdf')">
+  <div class="modal" role="dialog" aria-label="Download PDF Guide">
+    <div class="modal-hdr">
+      <h2>
+        <div class="ico-sm">📄</div>
+        Download PDF Implementation Guide
+      </h2>
+      <button
+        class="modal-close"
+        onclick="closeModal('pdf')"
+        aria-label="Close"
+      >
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="pdf-hero">
+        <div class="pdf-icon">📋</div>
+        <div>
+          <h3>DPDP Act 2023 & Rules 2025 — Complete Implementation Guide</h3>
+          <p>
+            A comprehensive 11-section guide for Government Departments covering
+            all aspects of DPDP compliance, from definitions to penalty
+            schedules.
+          </p>
+        </div>
+      </div>
+      <div class="pdf-meta">
+        <div class="pdf-m">
+          <div class="n">11</div>
+          <div class="l">Sections</div>
+        </div>
+        <div class="pdf-m">
+          <div class="n">13+</div>
+          <div class="l">Reference Tables</div>
+        </div>
+        <div class="pdf-m">
+          <div class="n">A4</div>
+          <div class="l">PDF Format</div>
+        </div>
+      </div>
+      <div class="pdf-contents">
+        <h4>Document Contents</h4>
+        <ul class="pdf-toc">
+          <li>
+            <b>1. Introduction & Legal Framework</b
+            ><span>Background & applicability</span>
+          </li>
+          <li>
+            <b>2. Key Definitions & Roles</b
+            ><span>7 core definitions explained</span>
+          </li>
+          <li>
+            <b>3. Three-Phase Implementation Roadmap</b
+            ><span>26 action items across 16 weeks</span>
+          </li>
+          <li>
+            <b>4. Compliance Checklist — 21 Items</b
+            ><span>Prioritised with implementation notes</span>
+          </li>
+          <li>
+            <b>5. Consent Management Framework</b
+            ><span>Notice elements & exemptions</span>
+          </li>
+          <li>
+            <b>6. Eight Rights of Citizens</b
+            ><span>SLAs and fulfilment methods</span>
+          </li>
+          <li>
+            <b>7. Government Exemptions — Section 17</b
+            ><span>Narrow scope & conditions</span>
+          </li>
+          <li>
+            <b>8. Data Breach Response Protocol</b
+            ><span>7-step SOP with timelines</span>
+          </li>
+          <li>
+            <b>9. Privacy Notice Templates</b
+            ><span>Template A (statutory) & B (consent)</span>
+          </li>
+          <li>
+            <b>10. Penalties & Enforcement</b
+            ><span>Section 33 penalty schedule</span>
+          </li>
+        </ul>
+      </div>
+      <div class="note info" style="margin-bottom: 1rem">
+        <div>
+          <strong>For Official Use</strong>This guide is intended for use by
+          Data Protection Officers, IT Heads, and Legal Teams of Government
+          Departments. It does not constitute legal advice.
+        </div>
+      </div>
+      <button class="dl-btn" onclick="downloadPDF()">
+        <i class="ti ti-download" aria-hidden="true"></i> Download PDF Guide
+        (Free)
+      </button>
+      <p
+        id="dl-status"
+        style="
+          text-align: center;
+          font-size: 12px;
+          color: var(--muted);
+          margin-top: 0.6rem;
+        "
+      ></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: CONTACT DPO ═══ -->
+<div class="modal-overlay" id="modal-dpo" onclick="closeOnBg(event, 'dpo')">
+  <div class="modal" role="dialog" aria-label="Contact DPO">
+    <div class="modal-hdr">
+      <h2>
+        <div class="ico-sm">👤</div>
+        Contact the Data Protection Officer
+      </h2>
+      <button
+        class="modal-close"
+        onclick="closeModal('dpo')"
+        aria-label="Close"
+      >
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="dpo-profile">
+        <div class="dpo-avatar">🏛️</div>
+        <div class="dpo-info">
+          <h3>Data Protection Officer — MeitY</h3>
+          <p>
+            Ministry of Electronics and Information Technology<br />Electronics
+            Niketan, 6 CGO Complex, Lodhi Road, New Delhi — 110 003
+          </p>
+        </div>
+      </div>
+      <div class="contact-chips">
+        <div class="chip">
+          <i class="ti ti-mail" aria-hidden="true"></i>
+          <div><b>dpo-meity@gov.in</b><span>Official DPO Email</span></div>
+        </div>
+        <div class="chip">
+          <i class="ti ti-phone" aria-hidden="true"></i>
+          <div><b>1800-111-555</b><span>Toll-free Helpline</span></div>
+        </div>
+        <div class="chip">
+          <i class="ti ti-clock" aria-hidden="true"></i>
+          <div><b>Mon–Fri, 10am–5pm</b><span>Response: 48 hrs</span></div>
+        </div>
+      </div>
+      <div id="dpo-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name *</label
+            ><input type="text" placeholder="Full name" id="f-name" />
+          </div>
+          <div class="form-group">
+            <label>Designation *</label
+            ><input
+              type="text"
+              placeholder="e.g. Joint Secretary, IT Head"
+              id="f-desig"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Department / Ministry *</label
+            ><input
+              type="text"
+              placeholder="e.g. Ministry of Health"
+              id="f-dept"
+            />
+          </div>
+          <div class="form-group">
+            <label>Official Email *</label
+            ><input
+              type="email"
+              placeholder="name@nic.in or name@gov.in"
+              id="f-email"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Nature of Query *</label>
+          <select id="f-type">
+            <option value="">Select query type…</option>
+            <option>DPDP Compliance Guidance</option>
+            <option>Data Breach Reporting</option>
+            <option>Citizen Rights Fulfilment</option>
+            <option>Data Processor Agreement Review</option>
+            <option>DPO Appointment Guidance</option>
+            <option>DPB Registration Query</option>
+            <option>Training & Capacity Building</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Detailed Query *</label
+          ><textarea
+            id="f-msg"
+            placeholder="Describe your compliance question or concern in detail. Include relevant service names, data categories, and any specific sections of the Act you need guidance on…"
+          ></textarea>
+        </div>
+        <div class="note warn" style="margin-bottom: 0.8rem">
+          <div>
+            For urgent data breach notifications, please call
+            <b>1800-111-555</b> immediately and email
+            <b>breach@meity.gov.in</b>. Do not report active breaches via this
+            form.
+          </div>
+        </div>
+        <button class="submit-btn" onclick="submitDPO()">
+          <i class="ti ti-send" aria-hidden="true"></i> Submit to DPO
+        </button>
+      </div>
+      <div class="form-success" id="dpo-success">
+        <div style="font-size: 2.5rem; margin-bottom: 0.5rem">✅</div>
+        <h3>Query Submitted Successfully</h3>
+        <p>
+          Your query has been received. The DPO office will acknowledge within
+          <b>48 working hours</b> and provide a full response within
+          <b>30 days</b> as per Section 14 of the DPDP Act 2023.<br /><br />Reference
+          number: <b id="ref-no"></b>
+        </p>
+        <button
+          class="btn-s"
+          style="margin-top: 1rem; width: 100%"
+          onclick="resetDPO()"
+        >
+          Submit Another Query
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ MODAL: DATA PROTECTION BOARD ═══ -->
+<div class="modal-overlay" id="modal-dpb" onclick="closeOnBg(event, 'dpb')">
+  <div class="modal" role="dialog" aria-label="Data Protection Board">
+    <div class="modal-hdr">
+      <h2>
+        <div class="ico-sm">🏛️</div>
+        Data Protection Board of India
+      </h2>
+      <button
+        class="modal-close"
+        onclick="closeModal('dpb')"
+        aria-label="Close"
+      >
+        <i class="ti ti-x"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="dpb-hero">
+        <div class="dpb-seal">⚖️</div>
+        <div>
+          <h3>Data Protection Board of India (DPBI)</h3>
+          <p>
+            Statutory adjudicatory body established under Section 18 of the
+            Digital Personal Data Protection Act, 2023. The Board adjudicates
+            complaints, imposes penalties, and issues binding directions to Data
+            Fiduciaries — including Government Departments.
+          </p>
+        </div>
+      </div>
+      <div class="dpb-grid">
+        <div class="dpb-card">
+          <h4>🏢 Establishment</h4>
+          <ul>
+            <li>Constituted by the Central Government</li>
+            <li>Chairperson + Members appointed by Govt</li>
+            <li>Operates as a digital-first adjudicatory body</li>
+            <li>All proceedings conducted digitally</li>
+            <li>
+              Orders appealable to Telecom Disputes Settlement & Appellate
+              Tribunal (TDSAT)
+            </li>
+          </ul>
+        </div>
+        <div class="dpb-card">
+          <h4>⚖️ Powers of the Board</h4>
+          <ul>
+            <li>Investigate complaints filed by Data Principals</li>
+            <li>Suo motu inquiry on receipt of information of breach</li>
+            <li>Issue binding directions to Data Fiduciaries</li>
+            <li>Impose financial penalties (up to ₹250 Crore)</li>
+            <li>Call for information, records, and documents</li>
+            <li>Refer matters to CERT-In for technical analysis</li>
+          </ul>
+        </div>
+      </div>
+      <h4
+        style="
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--navy);
+          margin-bottom: 0.8rem;
+        "
+      >
+        How Citizens Approach the DPB
+      </h4>
+      <ul class="timeline">
+        <li class="tl-item">
+          <div class="tl-dot o">1</div>
+          <div class="tl-txt">
+            <b>File Grievance with Data Fiduciary</b
+            ><span
+              >Citizen must first raise the issue with the Department's
+              Grievance Officer. GRO must acknowledge within 48 hrs and resolve
+              within 30 days.</span
+            >
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot o">2</div>
+          <div class="tl-txt">
+            <b>Unsatisfied? Appeal to DPB</b
+            ><span
+              >If the grievance is unresolved or citizen is unsatisfied with the
+              outcome, they can file a complaint with the DPB via its digital
+              portal.</span
+            >
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot r">3</div>
+          <div class="tl-txt">
+            <b>DPB Issues Notice to Department</b
+            ><span
+              >DPB issues a notice to the Data Fiduciary (your Department). The
+              Department must respond within the time stipulated by the
+              DPB.</span
+            >
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot r">4</div>
+          <div class="tl-txt">
+            <b>DPB Hearing & Order</b
+            ><span
+              >DPB conducts a digital hearing, examines evidence, and passes a
+              binding order — which may include penalty imposition and/or
+              directions to remedy the situation.</span
+            >
+          </div>
+        </li>
+        <li class="tl-item">
+          <div class="tl-dot g">5</div>
+          <div class="tl-txt">
+            <b>Appeal to TDSAT</b
+            ><span
+              >Either party can appeal the DPB order to the Telecom Disputes
+              Settlement & Appellate Tribunal (TDSAT) within 60 days of the
+              order.</span
+            >
+          </div>
+        </li>
+      </ul>
+      <h4
+        style="
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--navy);
+          margin: 0.9rem 0 0.7rem;
+        "
+      >
+        Official Links & Resources
+      </h4>
+      <a
+        href="https://dpboard.gov.in"
+        class="dpb-link"
+        target="_blank"
+        rel="noopener"
+      >
+        <div class="dpb-link-l">
+          <i class="ti ti-world" aria-hidden="true"></i>
+          <div>
+            <b>dpboard.gov.in</b
+            ><span>Official website of the Data Protection Board of India</span>
+          </div>
+        </div>
+        <i class="ti ti-external-link arr" aria-hidden="true"></i>
+      </a>
+      <a
+        href="https://meity.gov.in/dpdpa"
+        class="dpb-link"
+        target="_blank"
+        rel="noopener"
+      >
+        <div class="dpb-link-l">
+          <i class="ti ti-file-text" aria-hidden="true"></i>
+          <div>
+            <b>MeitY DPDPA Resources</b
+            ><span>Official DPDP Act text, Rules, and MeitY guidelines</span>
+          </div>
+        </div>
+        <i class="ti ti-external-link arr" aria-hidden="true"></i>
+      </a>
+      <a
+        href="https://cpgrams.gov.in"
+        class="dpb-link"
+        target="_blank"
+        rel="noopener"
+      >
+        <div class="dpb-link-l">
+          <i class="ti ti-help-circle" aria-hidden="true"></i>
+          <div>
+            <b>CPGRAMS — Grievance Portal</b
+            ><span>File grievances against Government Departments online</span>
+          </div>
+        </div>
+        <i class="ti ti-external-link arr" aria-hidden="true"></i>
+      </a>
+      <div class="note bad" style="margin-top: 0.8rem">
+        <div>
+          <strong>For Government Departments</strong>Maintain all grievance
+          records, DPO communications, and consent logs for a minimum of 5
+          years. These will be required in case the DPB issues a notice or
+          initiates an inquiry against your Department.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const ITEMS = [
+    {
+      id: 1,
+      t: "Appoint Data Protection Officer (DPO)",
+      d: "Designate a senior officer as DPO. Publish name, contact, and address on the portal homepage and privacy policy.",
+      p: "critical",
+      cat: "policy",
+      ref: "Section 8(7) & Rule 9",
+      impl: "Admin action — no code change",
+    },
+    {
+      id: 2,
+      t: "Publish Privacy Policy on Portal",
+      d: "A plain-language privacy policy covering purpose, retention, rights, and DPO contact. Accessible from every page via footer link.",
+      p: "critical",
+      cat: "policy",
+      ref: "Section 5 & Rule 3",
+      impl: "Add static page + footer link",
+    },
+    {
+      id: 3,
+      t: "Create Purpose-wise Consent Notice per Service",
+      d: "Draft a notice for each digital service specifying what data is collected, why, retention period, and sharing parties.",
+      p: "critical",
+      cat: "legal",
+      ref: "Rule 3(1)",
+      impl: "Static HTML/PDF — no code change",
+    },
+    {
+      id: 4,
+      t: "Grievance Redressal Mechanism",
+      d: "Set up a web form or dedicated email for citizens to file data-related grievances. Must acknowledge within 48 hours.",
+      p: "critical",
+      cat: "technical",
+      ref: "Section 14 & Rule 9",
+      impl: "New form / CPGRAMS integration",
+    },
+    {
+      id: 5,
+      t: "Consent Withdrawal Link in Portal Header",
+      d: "Add a clearly visible 'Manage My Consent' link in the site header/footer linking to a standalone consent management microsite.",
+      p: "critical",
+      cat: "technical",
+      ref: "Section 13",
+      impl: "Tag Manager injection — no core code change",
+    },
+    {
+      id: 6,
+      t: "Data Breach Notification SOP",
+      d: "Create a documented procedure: detect → assess severity → notify DPB within 72 hours → notify affected citizens within 7 days.",
+      p: "critical",
+      cat: "policy",
+      ref: "Section 8(6) & Rule 7",
+      impl: "Policy document + email template",
+    },
+    {
+      id: 7,
+      t: "Map All Personal Data Collections",
+      d: "Create a data inventory: list all forms, APIs, integrations collecting personal data. Classify and identify lawful basis for each.",
+      p: "critical",
+      cat: "legal",
+      ref: "Section 4–5",
+      impl: "Spreadsheet/registry — no code change",
+    },
+    {
+      id: 8,
+      t: "Review & Update Data Processor Agreements",
+      d: "All third-party vendors (cloud hosts, NIC, analytics tools) must be bound by data processing agreements obliging DPDP compliance.",
+      p: "high",
+      cat: "legal",
+      ref: "Section 8(2) & Rule 12",
+      impl: "Contract amendment — no code change",
+    },
+    {
+      id: 9,
+      t: "Cookie & Analytics Consent Banner",
+      d: "Deploy a consent banner for non-essential cookies (analytics, tracking). Essential cookies for session management are exempt.",
+      p: "high",
+      cat: "technical",
+      ref: "Rule 3",
+      impl: "Tag Manager / CMP — zero code change",
+    },
+    {
+      id: 10,
+      t: "Multilingual Privacy Notice (22 languages)",
+      d: "Notices must be available in all 22 scheduled Indian languages as specified in Rule 3(2). Leverage NIC translation services.",
+      p: "high",
+      cat: "policy",
+      ref: "Rule 3(2)",
+      impl: "Static translated pages — no code change",
+    },
+    {
+      id: 11,
+      t: "Data Retention Schedule",
+      d: "Define and publish how long each data category is retained. Align with relevant sector-specific laws (e.g., Public Records Act).",
+      p: "high",
+      cat: "policy",
+      ref: "Section 8(7)",
+      impl: "Policy document + DB scheduled jobs",
+    },
+    {
+      id: 12,
+      t: "Age Verification for Minors (Rule 10)",
+      d: "Services accessible to under-18 citizens must implement parental consent verification. Add age gate to registration forms.",
+      p: "high",
+      cat: "technical",
+      ref: "Section 9 & Rule 10",
+      impl: "Add age check field to registration form",
+    },
+    {
+      id: 13,
+      t: "Right to Access — Request Fulfilment Workflow",
+      d: "Create a process for citizens to request a summary of data held by the department. Implement web form; DPO processes within 30 days.",
+      p: "high",
+      cat: "technical",
+      ref: "Section 11",
+      impl: "Standalone form + manual process",
+    },
+    {
+      id: 14,
+      t: "Right to Correction — Update Request Workflow",
+      d: "Citizens can request correction of inaccurate data. Create internal ticketing for DPO to review and update records.",
+      p: "medium",
+      cat: "technical",
+      ref: "Section 12",
+      impl: "Grievance form + internal workflow",
+    },
+    {
+      id: 15,
+      t: "Right to Erasure — Deletion Scope Policy",
+      d: "Define what can be erased (optional data, marketing preferences) vs. what must be retained (statutory records). Communicate to citizens.",
+      p: "medium",
+      cat: "legal",
+      ref: "Section 12(3)",
+      impl: "Policy document — no code change",
+    },
+    {
+      id: 16,
+      t: "Annual Security Audit",
+      d: "Engage a CERT-In empanelled security auditor for annual vulnerability assessment and penetration testing.",
+      p: "medium",
+      cat: "technical",
+      ref: "Rule 6",
+      impl: "Procurement + audit — no code change",
+    },
+    {
+      id: 17,
+      t: "Register with Data Protection Board",
+      d: "When the DPB registration portal is notified, Significant Data Fiduciaries must register. Prepare documentation in advance.",
+      p: "medium",
+      cat: "policy",
+      ref: "Section 10 & Rule 12",
+      impl: "DPB portal submission — no code change",
+    },
+    {
+      id: 18,
+      t: "Staff Training — DPO & Grievance Officers",
+      d: "Conduct DPDP awareness and compliance training for DPO, GROs, and all staff accessing citizen personal data.",
+      p: "medium",
+      cat: "policy",
+      ref: "Best practice",
+      impl: "Training programme — no code change",
+    },
+    {
+      id: 19,
+      t: "Nomination Feature in Privacy Dashboard",
+      d: "Allow citizens to nominate a representative to exercise data rights on their behalf (in case of death or incapacity).",
+      p: "low",
+      cat: "technical",
+      ref: "Section 16",
+      impl: "Standalone form — Phase 3",
+    },
+    {
+      id: 20,
+      t: "Cross-Border Data Transfer Review",
+      d: "Check if any citizen data is processed or stored outside India (cloud servers, CDNs). Verify compliance with negative list.",
+      p: "low",
+      cat: "legal",
+      ref: "Section 16 & Rule 14",
+      impl: "Hosting review — no code change",
+    },
+    {
+      id: 21,
+      t: "Privacy Impact Assessment (PIA)",
+      d: "For new digital services or significant changes, conduct a PIA before launch. Document risks, mitigations, and DPO sign-off.",
+      p: "low",
+      cat: "policy",
+      ref: "Best practice",
+      impl: "Assessment document — no code change",
+    },
+  ];
+
+  let checked = {},
+    curFilter = "all";
+
+  const TAG = {
+    critical: '<span class="tag c">Critical</span>',
+    high: '<span class="tag h">High</span>',
+    medium: '<span class="tag m">Medium</span>',
+    low: '<span class="tag l">Low</span>',
+  };
+
+  function renderCL(f) {
+    curFilter = f;
+    const pf = ["critical", "high", "medium", "low"];
+    const cf = ["policy", "technical", "legal"];
+    let items = ITEMS;
+    if (pf.includes(f)) items = items.filter((i) => i.p === f);
+    else if (cf.includes(f)) items = items.filter((i) => i.cat === f);
+    document.getElementById("cl").innerHTML = items
+      .map(
+        (i) => `
+    <li class="ci${checked[i.id] ? " done" : ""}" onclick="chk(${i.id})">
+      <div class="cb">${checked[i.id] ? "✓" : ""}</div>
+      <div class="ci-body">
+        <div class="ci-hd"><span class="ci-title">${i.t}</span>${TAG[i.p]}</div>
+        <div class="ci-desc">${i.d}</div>
+        <div class="ci-meta">
+          <span class="cp">📜 ${i.ref}</span>
+          <span class="cp">⚙️ ${i.impl}</span>
+          <span class="cp">🏷️ ${i.cat.charAt(0).toUpperCase() + i.cat.slice(1)}</span>
+        </div>
+      </div>
+    </li>`,
+      )
+      .join("");
+    updProg();
+  }
+
+  function chk(id) {
+    checked[id] = !checked[id];
+    renderCL(curFilter);
+  }
+
+  function updProg() {
+    const tot = ITEMS.length,
+      done = Object.values(checked).filter(Boolean).length;
+    const pct = Math.round((done / tot) * 100);
+    document.getElementById("pct").textContent = pct + "%";
+    document.getElementById("fill").style.width = pct + "%";
+    const c = { critical: 0, high: 0, medium: 0, low: 0 };
+    ITEMS.forEach((i) => {
+      if (checked[i.id]) c[i.p]++;
+    });
+    document.getElementById("cnt-c").textContent =
+      c.critical + " Critical done";
+    document.getElementById("cnt-h").textContent = c.high + " High done";
+    document.getElementById("cnt-m").textContent = c.medium + " Medium done";
+    document.getElementById("cnt-l").textContent = c.low + " Low done";
+  }
+
+  function filter(f, btn) {
+    document.querySelectorAll(".fb").forEach((b) => b.classList.remove("on"));
+    btn.classList.add("on");
+    renderCL(f);
+  }
+
+  function tab(id, btn) {
+    document
+      .querySelectorAll(".panel")
+      .forEach((p) => p.classList.remove("on"));
+    document.querySelectorAll(".tab").forEach((b) => b.classList.remove("on"));
+    document.getElementById("p-" + id).classList.add("on");
+    btn.classList.add("on");
+  }
+
+  function tog(btn) {
+    const row = btn.closest(".con-row");
+    if (row.querySelector(".req")) return;
+    btn.classList.toggle("on");
+    btn.classList.toggle("off");
+  }
+
+  function openModal(id) {
+    document.getElementById("modal-" + id).classList.add("open");
+  }
+  function closeModal(id) {
+    document.getElementById("modal-" + id).classList.remove("open");
+  }
+  function closeOnBg(e, id) {
+    if (e.target === document.getElementById("modal-" + id)) closeModal(id);
+  }
+
+  function submitDPO() {
+    const n = document.getElementById("f-name").value.trim();
+    const e = document.getElementById("f-email").value.trim();
+    const t = document.getElementById("f-type").value;
+    const m = document.getElementById("f-msg").value.trim();
+    if (!n || !e || !t || !m) {
+      alert("Please fill all required fields before submitting.");
+      return;
+    }
+    document.getElementById("dpo-form").style.display = "none";
+    const s = document.getElementById("dpo-success");
+    s.style.display = "block";
+    const ref =
+      "DPO-" +
+      new Date().getFullYear() +
+      "-" +
+      Math.floor(Math.random() * 90000 + 10000);
+    document.getElementById("ref-no").textContent = ref;
+  }
+
+  function resetDPO() {
+    ["f-name", "f-desig", "f-dept", "f-email", "f-msg"].forEach(
+      (id) => (document.getElementById(id).value = ""),
+    );
+    document.getElementById("f-type").value = "";
+    document.getElementById("dpo-form").style.display = "block";
+    document.getElementById("dpo-success").style.display = "none";
+  }
+
+  function downloadPDF() {
+    const btn = document.querySelector(".dl-btn");
+    const st = document.getElementById("dl-status");
+    btn.innerHTML =
+      '<i class="ti ti-loader" style="animation:spin 1s linear infinite"></i> Preparing download…';
+    btn.style.opacity = ".7";
+    btn.style.cursor = "not-allowed";
+    setTimeout(() => {
+      const a = document.createElement("a");
+      a.href = "/mnt/user-data/outputs/DPDP_Implementation_Guide_2025.pdf";
+      a.download = "DPDP_Implementation_Guide_2025.pdf";
+      a.click();
+      btn.innerHTML =
+        '<i class="ti ti-check"></i> Downloaded — Check your Downloads folder';
+      btn.style.background = "var(--green)";
+      btn.style.opacity = "1";
+      btn.style.cursor = "pointer";
+      st.textContent =
+        "File: DPDP_Implementation_Guide_2025.pdf · 11 sections · Government of India · MeitY";
+      setTimeout(() => {
+        btn.innerHTML =
+          '<i class="ti ti-download"></i> Download PDF Guide (Free)';
+        btn.style.background = "var(--green)";
+      }, 6000);
+    }, 1800);
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      ["privacy", "pdf", "dpo", "dpb"].forEach((id) => {
+        document.getElementById("modal-" + id).classList.remove("open");
+      });
+    }
+  });
+
+  const style = document.createElement("style");
+  style.textContent = "@keyframes spin{to{transform:rotate(360deg)}}";
+  document.head.appendChild(style);
+
+  renderCL("all");
+</script>
