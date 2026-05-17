@@ -315,6 +315,35 @@ td:first-child{font-weight:600;color:var(--navy2)}
   .pdf-meta{grid-template-columns:1fr 1fr}
   .stats{gap:.7rem}
 }
+
+/* ── TECH GUIDE STYLES ──────────────────────────────────── */
+.tg-step{background:#fff;border:1px solid var(--bdr);border-radius:var(--rx);margin-bottom:1.2rem;overflow:hidden;box-shadow:var(--sh)}
+.tg-step-hd{display:flex;align-items:flex-start;gap:1rem;padding:1.1rem 1.4rem;background:var(--off);border-bottom:1px solid var(--bdr);cursor:default}
+.tg-num{width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--saffron);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;letter-spacing:-.5px}
+.tg-step-hd h3{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.tg-sub{font-size:11.5px;color:var(--mu);margin:0}
+.tg-body{padding:1.2rem 1.4rem}
+.tg-h4{font-size:12.5px;font-weight:700;color:var(--navy2);margin-bottom:.5rem}
+.tg-list{list-style:none}
+.tg-list li{font-size:12.5px;color:var(--t2);padding:3px 0 3px 16px;position:relative}
+.tg-list li::before{content:"›";position:absolute;left:2px;color:var(--saffron);font-weight:700}
+.tg-grid2{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+@media(max-width:700px){.tg-grid2{grid-template-columns:1fr}}
+.tg-arch{display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap;padding:.8rem;background:var(--off);border-radius:var(--r);border:1px solid var(--bdr);margin-bottom:1rem;font-size:12px;text-align:center}
+.arch-box{background:#fff;border:2px solid var(--bdr);border-radius:8px;padding:.5rem .8rem;font-weight:600;color:var(--navy);font-size:12px;min-width:120px}
+.arch-box.citizen{border-color:var(--blue);background:var(--bl)}
+.arch-box.proxy{border-color:var(--saffron);background:var(--wl)}
+.arch-box.app{border-color:var(--green);background:var(--gl)}
+.arch-box small{display:block;font-weight:400;color:var(--mu);font-size:10.5px;margin-top:2px}
+.arch-arrow{color:var(--mu);font-weight:700;font-size:13px}
+.code-block{background:#0D1117;color:#E6EDF3;border-radius:8px;padding:1rem 1.2rem;font-family:"Courier New",Courier,monospace;font-size:12px;line-height:1.65;overflow-x:auto;margin:.5rem 0 1rem;white-space:pre;border:1px solid #30363D}
+.code-block .kw{color:#FF7B72}
+.code-block .str{color:#A5D6FF}
+.code-block .cm{color:#8B949E;font-style:italic}
+.tg-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.tg-tab{padding:5px 13px;border-radius:6px;border:1px solid var(--bdr);background:#fff;font-size:12px;font-weight:500;cursor:pointer;color:var(--t2);font-family:inherit;transition:all .18s}
+.tg-tab.on,.tg-tab:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tg-pane{display:none}.tg-pane.on{display:block}
 </style>
 </head>
 <body>
@@ -366,6 +395,7 @@ td:first-child{font-weight:600;color:var(--navy2)}
   <button class="tab" onclick="tab('breach',this)"><i class="ti ti-shield-exclamation"></i>Breach Response</button>
   <button class="tab" onclick="tab('dpo',this)"><i class="ti ti-dashboard"></i>DPO Dashboard</button>
   <button class="tab" onclick="tab('exemptions',this)"><i class="ti ti-scale"></i>Exemptions</button>
+  <button class="tab" onclick="tab('techguide',this)"><i class="ti ti-terminal-2"></i>Tech Implementation</button>
 </div>
 
 <main class="content">
@@ -553,6 +583,770 @@ td:first-child{font-weight:600;color:var(--navy2)}
     <div class="card"><div class="card-hd"><div class="ico r">📢</div><div><h3>Publicly Available Data</h3><div class="csub">Section 3(c) — DPDPA 2023</div></div></div><p>Personal data that has been made public by the Data Principal themselves does not require fresh consent for processing.</p><ul><li>The data principal must have voluntarily made it public</li><li>Government-published data (gazette, RTI responses) qualifies</li><li>Cannot be repurposed beyond the original scope of publication</li><li>Does not apply to leaked or unauthorised disclosures</li></ul><div style="margin-top:8px"><span class="tag l">Narrow scope</span></div></div>
   </div>
   <div class="note info"><div><strong>Best Practice for All Government Departments</strong>Even where exemptions apply, maintain Privacy Notices, appoint a DPO, implement security safeguards, and provide a grievance mechanism. This builds citizen trust and protects the Department in case of DPB scrutiny. Exemption from the Act's provisions does not mean exemption from all data ethics obligations.</div></div>
+</section>
+
+
+<!-- ═══════════ TECH IMPLEMENTATION GUIDE ═══════════ -->
+<section class="panel" id="p-techguide">
+<div class="sh"><h2>Technical Implementation Guide</h2><p>Step-by-step technical steps and code-level guidance for embedding DPDP Act 2023 compliance into legacy and existing Government web applications — with zero to minimal changes to the core codebase.</p></div>
+
+<div class="note warn"><div><strong>Architecture Principle — Wrapper, Not Rewrite</strong>All techniques below follow a non-invasive wrapper pattern: place DPDP compliance components <em>around</em> your existing application using reverse proxies, tag managers, middleware layers, and standalone microsites. Your core application code, database schema, and business logic remain untouched.</div></div>
+
+<!-- STEP 1 -->
+<div class="tg-step">
+  <div class="tg-step-hd"><div class="tg-num">01</div><div><h3>Data Audit & Inventory — First Step for All Applications</h3><p class="tg-sub">Zero code · Policy phase · Applicable to ALL systems regardless of technology stack</p></div></div>
+  <div class="tg-body">
+    <div class="tg-grid2">
+      <div>
+        <h4 class="tg-h4">What to Map</h4>
+        <ul class="tg-list">
+          <li>Every HTML form that accepts citizen input — GET and POST</li>
+          <li>Every API endpoint that receives or transmits personal data</li>
+          <li>Every database table/column holding personal data</li>
+          <li>Every log file, audit trail, or analytics system capturing PII</li>
+          <li>Every third-party library or SDK that transmits data externally</li>
+          <li>File upload endpoints — documents, photos, biometrics</li>
+        </ul>
+        <h4 class="tg-h4" style="margin-top:1rem">Output: Data Register (minimum columns)</h4>
+        <div class="code-block">Form / API | Data Fields | Purpose | Lawful Basis | Shared With | Retention | System Owner</div>
+      </div>
+      <div>
+        <h4 class="tg-h4">Automated Discovery Tools</h4>
+        <ul class="tg-list">
+          <li><strong>OWASP ZAP / Burp Suite</strong> — Spider all forms and endpoints</li>
+          <li><strong>grep / ripgrep</strong> — Scan source code for PII field names</li>
+          <li><strong>DB introspection queries</strong> — List columns containing PII</li>
+          <li><strong>Network traffic analysis</strong> — Wireshark / mitmproxy for data flows</li>
+        </ul>
+        <h4 class="tg-h4" style="margin-top:1rem">Quick DB Scan (PostgreSQL example)</h4>
+        <div class="code-block"><span class="kw">SELECT</span> table_name, column_name, data_type
+<span class="kw">FROM</span> information_schema.columns
+<span class="kw">WHERE</span> column_name <span class="kw">ILIKE ANY</span>(
+  ARRAY[<span class="str">'%name%'</span>,<span class="str">'%email%'</span>,<span class="str">'%phone%'</span>,
+        <span class="str">'%aadhaar%'</span>,<span class="str">'%pan%'</span>,<span class="str">'%address%'</span>,
+        <span class="str">'%mobile%'</span>,<span class="str">'%dob%'</span>,<span class="str">'%gender%'</span>]
+) <span class="kw">ORDER BY</span> table_name;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 2 -->
+<div class="tg-step">
+  <div class="tg-step-hd"><div class="tg-num">02</div><div><h3>Consent Banner & Notice Injection via Reverse Proxy</h3><p class="tg-sub">No application code change · Nginx / Apache / HAProxy · Works with any backend technology</p></div></div>
+  <div class="tg-body">
+    <div class="note ok"><div>The reverse proxy sits in front of your existing application server. It injects the consent banner JavaScript into every HTML response using <code>sub_filter</code>. Your application code is never touched.</div></div>
+    <div class="tg-arch">
+      <div class="arch-box citizen">🌐 Citizen Browser</div>
+      <div class="arch-arrow">→ HTTPS →</div>
+      <div class="arch-box proxy">🛡️ Nginx Reverse Proxy<br><small>Injects consent JS</small></div>
+      <div class="arch-arrow">→ HTTP →</div>
+      <div class="arch-box app">🏛️ Existing App Server<br><small>Untouched</small></div>
+    </div>
+    <h4 class="tg-h4">Nginx Configuration — Sub-filter Injection</h4>
+    <div class="code-block"><span class="cm"># /etc/nginx/sites-available/dept-portal.conf</span>
+server {
+    listen 443 ssl;
+    server_name portal.dept.gov.in;
+
+    <span class="cm"># ── DPDP Security Headers ──────────────────────</span>
+    add_header Strict-Transport-Security <span class="str">"max-age=31536000; includeSubDomains"</span> always;
+    add_header X-Frame-Options <span class="str">"SAMEORIGIN"</span> always;
+    add_header X-Content-Type-Options <span class="str">"nosniff"</span> always;
+    add_header Referrer-Policy <span class="str">"strict-origin-when-cross-origin"</span> always;
+    add_header Content-Security-Policy
+        <span class="str">"default-src 'self'; script-src 'self' 'nonce-{NONCE}' cdn.dpdp.gov.in;"</span> always;
+    add_header Permissions-Policy
+        <span class="str">"geolocation=(), camera=(), microphone=()"</span> always;
+
+    <span class="cm"># ── Inject DPDP consent banner into every HTML page ──</span>
+    location / {
+        proxy_pass http://127.0.0.1:8080;  <span class="cm"># your existing app</span>
+        proxy_set_header Host $host;
+
+        <span class="cm"># Enable sub_filter to inject banner before &lt;/body&gt;</span>
+        sub_filter_once on;
+        sub_filter_types text/html;
+        sub_filter <span class="str">'&lt;/body&gt;'</span>
+            <span class="str">'&lt;script src="https://cdn.dpdp.gov.in/consent-banner.js"
+             data-dept="MOFCA" data-lang="hi,en" async&gt;&lt;/script&gt;&lt;/body&gt;'</span>;
+    }
+
+    <span class="cm"># ── Privacy static pages (served directly by Nginx) ──</span>
+    location /privacy-policy {
+        root /var/www/dpdp-static;
+        try_files /privacy-policy.html =404;
+    }
+    location /consent-manager {
+        proxy_pass http://127.0.0.1:3001;  <span class="cm"># consent microsite</span>
+    }
+}</div>
+
+    <h4 class="tg-h4" style="margin-top:1.2rem">Apache Equivalent — mod_substitute</h4>
+    <div class="code-block"><span class="cm"># /etc/apache2/sites-available/dept-portal.conf</span>
+&lt;VirtualHost *:443&gt;
+    ServerName portal.dept.gov.in
+
+    <span class="cm"># DPDP Security Headers</span>
+    Header always set Strict-Transport-Security "max-age=31536000"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+
+    <span class="cm"># Inject consent banner via mod_substitute</span>
+    AddOutputFilterByType SUBSTITUTE text/html
+    Substitute <span class="str">"s|&lt;/body&gt;|&lt;script src='/dpdp-consent.js'&gt;&lt;/script&gt;&lt;/body&gt;|i"</span>
+
+    ProxyPass / http://localhost:8080/
+    ProxyPassReverse / http://localhost:8080/
+&lt;/VirtualHost&gt;</div>
+  </div>
+</div>
+
+<!-- STEP 3 -->
+<div class="tg-step">
+  <div class="tg-step-hd"><div class="tg-num">03</div><div><h3>Consent Banner JavaScript — The Injected Module</h3><p class="tg-sub">Self-contained JS · Injected via Nginx sub_filter or Google Tag Manager · No framework dependency</p></div></div>
+  <div class="tg-body">
+    <h4 class="tg-h4">consent-banner.js — Deploy to CDN or Static Host</h4>
+    <div class="code-block"><span class="cm">/**
+ * DPDP Act 2023 Consent Banner — Government Portal Module
+ * Deploy via: Nginx sub_filter | Apache mod_substitute | GTM
+ * No dependencies. Vanilla JS. IE11+ compatible.
+ */</span>
+(<span class="kw">function</span>() {
+  <span class="kw">var</span> CONSENT_KEY = <span class="str">'dpdp_consent_v1'</span>;
+  <span class="kw">var</span> DEPT = document.currentScript?.dataset.dept || <span class="str">'DEPT'</span>;
+
+  <span class="cm">// Check if consent already given (stored in localStorage)</span>
+  <span class="kw">if</span> (localStorage.getItem(CONSENT_KEY)) <span class="kw">return</span>;
+
+  <span class="cm">// Inject CSS</span>
+  <span class="kw">var</span> style = document.createElement(<span class="str">'style'</span>);
+  style.textContent = <span class="str">`
+    #dpdp-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 99999;
+      background: #0A1628; color: #fff; padding: 1rem 1.5rem;
+      font-family: system-ui, sans-serif; font-size: 14px;
+      border-top: 3px solid #FF9933;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+    }
+    #dpdp-banner a { color: #FF9933; }
+    .dpdp-btn {
+      padding: 8px 20px; border-radius: 6px; border: none;
+      cursor: pointer; font-size: 13px; font-weight: 600;
+    }
+    .dpdp-accept { background: #138808; color: #fff; }
+    .dpdp-manage { background: transparent; color: #fff;
+      border: 1px solid rgba(255,255,255,0.3); }
+  `</span>;
+  document.head.appendChild(style);
+
+  <span class="cm">// Inject banner HTML</span>
+  <span class="kw">var</span> banner = document.createElement(<span class="str">'div'</span>);
+  banner.id = <span class="str">'dpdp-banner'</span>;
+  banner.innerHTML = <span class="str">`
+    &lt;div&gt;
+      &lt;strong&gt;&#9705; Data Privacy Notice&lt;/strong&gt; — This portal collects personal
+      data for citizen services as per DPDP Act 2023.
+      &lt;a href="/privacy-policy"&gt;Privacy Policy&lt;/a&gt; |
+      &lt;a href="/consent-manager"&gt;Manage Preferences&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;div style="display:flex;gap:8px"&gt;
+      &lt;button class="dpdp-btn dpdp-manage"
+        onclick="window.location='/consent-manager'"&gt;Manage&lt;/button&gt;
+      &lt;button class="dpdp-btn dpdp-accept"
+        onclick="dpdpAccept()"&gt;Accept &amp; Continue&lt;/button&gt;
+    &lt;/div&gt;
+  `</span>;
+  document.body.appendChild(banner);
+
+  window.dpdpAccept = <span class="kw">function</span>() {
+    localStorage.setItem(CONSENT_KEY, JSON.stringify({
+      accepted: <span class="kw">true</span>,
+      timestamp: <span class="kw">new</span> Date().toISOString(),
+      dept: DEPT,
+      version: <span class="str">'DPDP-2023-v1'</span>
+    }));
+    document.getElementById(<span class="str">'dpdp-banner'</span>).remove();
+  };
+})();</div>
+
+    <h4 class="tg-h4" style="margin-top:1.2rem">Google Tag Manager Alternative (no server access needed)</h4>
+    <div class="code-block"><span class="cm">// In GTM → New Tag → Custom HTML Tag</span>
+<span class="cm">// Trigger: All Pages — Page View</span>
+&lt;script src="https://cdn.dpdp.gov.in/consent-banner.js"
+  data-dept="{{Page Hostname}}" async&gt;&lt;/script&gt;</div>
+  </div>
+</div>
+
+<!-- STEP 4 -->
+<div class="tg-step">
+  <div class="tg-step-hd"><div class="tg-num">04</div><div><h3>Legacy Java / .NET / PHP Application — Middleware Integration</h3><p class="tg-sub">Filter / Interceptor pattern · Plugs into existing request pipeline · Zero business logic change</p></div></div>
+  <div class="tg-body">
+    <div class="tg-tabs">
+      <button class="tg-tab on" onclick="tgTab('java',this)">Java / Spring</button>
+      <button class="tg-tab" onclick="tgTab('dotnet',this)">.NET / C#</button>
+      <button class="tg-tab" onclick="tgTab('php',this)">PHP</button>
+      <button class="tg-tab" onclick="tgTab('python',this)">Python / Django</button>
+    </div>
+
+    <div class="tg-pane on" id="tg-java">
+      <h4 class="tg-h4">Spring Boot — OncePerRequestFilter</h4>
+      <div class="code-block"><span class="cm">// DpdpConsentFilter.java — Add to existing Spring Boot app</span>
+<span class="kw">@Component</span>
+<span class="kw">@Order</span>(Ordered.HIGHEST_PRECEDENCE)
+<span class="kw">public class</span> DpdpConsentFilter <span class="kw">extends</span> OncePerRequestFilter {
+
+  <span class="kw">@Override
+  protected void</span> doFilterInternal(HttpServletRequest req,
+      HttpServletResponse res, FilterChain chain)
+      <span class="kw">throws</span> ServletException, IOException {
+
+    <span class="cm">// 1. Add DPDP security headers to every response</span>
+    res.setHeader(<span class="str">"Strict-Transport-Security"</span>,
+        <span class="str">"max-age=31536000; includeSubDomains"</span>);
+    res.setHeader(<span class="str">"X-Frame-Options"</span>, <span class="str">"SAMEORIGIN"</span>);
+    res.setHeader(<span class="str">"X-Content-Type-Options"</span>, <span class="str">"nosniff"</span>);
+    res.setHeader(<span class="str">"Referrer-Policy"</span>,
+        <span class="str">"strict-origin-when-cross-origin"</span>);
+
+    <span class="cm">// 2. Log consent token on data-submission endpoints</span>
+    <span class="kw">if</span> (<span class="str">"POST"</span>.equals(req.getMethod())) {
+      String consentToken = req.getHeader(<span class="str">"X-DPDP-Consent"</span>);
+      String cookieConsent = getCookieValue(req, <span class="str">"dpdp_consent_v1"</span>);
+      <span class="kw">if</span> (consentToken != <span class="kw">null</span> || cookieConsent != <span class="kw">null</span>) {
+        ConsentAuditLog.record(req.getRequestURI(),
+            req.getRemoteAddr(), consentToken, LocalDateTime.now());
+      }
+    }
+    chain.doFilter(req, res);
+  }
+}</div>
+    </div>
+
+    <div class="tg-pane" id="tg-dotnet">
+      <h4 class="tg-h4">.NET 6+ — Middleware</h4>
+      <div class="code-block"><span class="cm">// DpdpMiddleware.cs — Register in Program.cs</span>
+<span class="kw">public class</span> DpdpMiddleware {
+  <span class="kw">private readonly</span> RequestDelegate _next;
+  <span class="kw">public</span> DpdpMiddleware(RequestDelegate next) => _next = next;
+
+  <span class="kw">public async</span> Task InvokeAsync(HttpContext ctx) {
+    <span class="cm">// Inject DPDP security headers</span>
+    ctx.Response.Headers.Add(<span class="str">"Strict-Transport-Security"</span>,
+        <span class="str">"max-age=31536000; includeSubDomains"</span>);
+    ctx.Response.Headers.Add(<span class="str">"X-Frame-Options"</span>, <span class="str">"SAMEORIGIN"</span>);
+    ctx.Response.Headers.Add(<span class="str">"X-Content-Type-Options"</span>, <span class="str">"nosniff"</span>);
+
+    <span class="cm">// Log consent on POST requests</span>
+    <span class="kw">if</span> (ctx.Request.Method == <span class="str">"POST"</span>) {
+      <span class="kw">var</span> consent = ctx.Request.Cookies[<span class="str">"dpdp_consent_v1"</span>];
+      <span class="kw">await</span> ConsentAuditService.LogAsync(
+          ctx.Request.Path, consent, DateTime.UtcNow);
+    }
+    <span class="kw">await</span> _next(ctx);
+  }
+}
+
+<span class="cm">// Program.cs — one line addition</span>
+app.UseMiddleware&lt;DpdpMiddleware&gt;();</div>
+    </div>
+
+    <div class="tg-pane" id="tg-php">
+      <h4 class="tg-h4">PHP — Global Bootstrap Hook</h4>
+      <div class="code-block"><span class="cm">&lt;?php
+// dpdp_bootstrap.php — include at top of index.php or config.php
+// require_once 'dpdp_bootstrap.php'; &lt;-- one line addition</span>
+
+<span class="cm">// 1. Inject security headers</span>
+header(<span class="str">'Strict-Transport-Security: max-age=31536000'</span>);
+header(<span class="str">'X-Frame-Options: SAMEORIGIN'</span>);
+header(<span class="str">'X-Content-Type-Options: nosniff'</span>);
+header(<span class="str">'Referrer-Policy: strict-origin-when-cross-origin'</span>);
+
+<span class="cm">// 2. Consent audit log on POST</span>
+<span class="kw">if</span> ($_SERVER[<span class="str">'REQUEST_METHOD'</span>] === <span class="str">'POST'</span>) {
+  $consent = $_COOKIE[<span class="str">'dpdp_consent_v1'</span>] ?? <span class="kw">null</span>;
+  $uri     = $_SERVER[<span class="str">'REQUEST_URI'</span>];
+  $ip      = $_SERVER[<span class="str">'REMOTE_ADDR'</span>];
+  dpdp_log_consent($uri, $ip, $consent);
+}
+
+<span class="kw">function</span> dpdp_log_consent($uri, $ip, $consent) {
+  $log = sprintf(<span class="str">"[%s] URI:%s IP:%s CONSENT:%s
+"</span>,
+    date(<span class="str">'c'</span>), $uri, $ip, $consent ?? <span class="str">'NONE'</span>);
+  file_put_contents(<span class="str">'/var/log/dpdp/consent.log'</span>,
+    $log, FILE_APPEND | LOCK_EX);
+}</div>
+    </div>
+
+    <div class="tg-pane" id="tg-python">
+      <h4 class="tg-h4">Django — Middleware</h4>
+      <div class="code-block"><span class="cm"># dpdp_middleware.py — add to MIDDLEWARE list in settings.py</span>
+<span class="kw">import</span> logging
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime
+
+logger = logging.getLogger(<span class="str">'dpdp.consent'</span>)
+
+<span class="kw">class</span> DpdpConsentMiddleware:
+    <span class="kw">def</span> __init__(self, get_response):
+        self.get_response = get_response
+
+    <span class="kw">def</span> __call__(self, request):
+        response = self.get_response(request)
+
+        <span class="cm"># 1. Add DPDP security headers to every response</span>
+        response[<span class="str">'Strict-Transport-Security'</span>] =             <span class="str">'max-age=31536000; includeSubDomains'</span>
+        response[<span class="str">'X-Frame-Options'</span>] = <span class="str">'SAMEORIGIN'</span>
+        response[<span class="str">'X-Content-Type-Options'</span>] = <span class="str">'nosniff'</span>
+        response[<span class="str">'Referrer-Policy'</span>] =             <span class="str">'strict-origin-when-cross-origin'</span>
+
+        <span class="cm"># 2. Log consent token on all POST requests</span>
+        <span class="kw">if</span> request.method == <span class="str">'POST'</span>:
+            consent = request.COOKIES.get(<span class="str">'dpdp_consent_v1'</span>)
+            logger.info(<span class="str">'consent_log'</span>, extra={
+                <span class="str">'uri'</span>: request.path,
+                <span class="str">'consent'</span>: consent,
+                <span class="str">'ts'</span>: datetime.utcnow().isoformat()
+            })
+        <span class="kw">return</span> response
+
+<span class="cm"># settings.py — add ONE line to MIDDLEWARE list:</span>
+<span class="cm"># 'myapp.dpdp_middleware.DpdpConsentMiddleware',</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 5 -->
+<div class="tg-step">
+  <div class="tg-step-hd"><div class="tg-num">05</div><div><h3>Consent Audit Log — Database Schema</h3><p class="tg-sub">Add ONE new table to existing database · No changes to existing schema · Captures all consent events</p></div></div>
+  <div class="tg-body">
+    <h4 class="tg-h4">SQL — Works on PostgreSQL, MySQL, Oracle, SQL Server</h4>
+    <div class="code-block"><span class="cm">-- DPDP Consent Audit Log Table
+-- Add to existing database — NO changes to existing tables required</span>
+<span class="kw">CREATE TABLE</span> dpdp_consent_log (
+  id              BIGSERIAL <span class="kw">PRIMARY KEY</span>,
+  session_id      VARCHAR(128)  <span class="kw">NOT NULL</span>,
+  citizen_ref     VARCHAR(64),              <span class="cm">-- masked/hashed citizen ID</span>
+  endpoint_uri    VARCHAR(512)  <span class="kw">NOT NULL</span>,
+  consent_version VARCHAR(32)   <span class="kw">NOT NULL</span>,  <span class="cm">-- e.g. 'DPDP-2023-v1'</span>
+  purposes        JSONB,                    <span class="cm">-- {"eligibility":true, "sms":false}</span>
+  ip_address      INET,
+  user_agent      TEXT,
+  consent_given   BOOLEAN       <span class="kw">NOT NULL</span>,
+  consent_ts      TIMESTAMPTZ   <span class="kw">NOT NULL DEFAULT NOW</span>(),
+  withdrawn_ts    TIMESTAMPTZ,              <span class="cm">-- NULL until withdrawn</span>
+  source          VARCHAR(32)   <span class="kw">DEFAULT</span> <span class="str">'web'</span>  <span class="cm">-- web|mobile|ivr|csc</span>
+);
+
+<span class="kw">CREATE INDEX</span> idx_consent_citizen  <span class="kw">ON</span> dpdp_consent_log (citizen_ref);
+<span class="kw">CREATE INDEX</span> idx_consent_ts       <span class="kw">ON</span> dpdp_consent_log (consent_ts);
+<span class="kw">CREATE INDEX</span> idx_consent_endpoint <span class="kw">ON</span> dpdp_consent_log (endpoint_uri);
+
+<span class="cm">-- Withdrawal tracking (separate table for audit trail integrity)</span>
+<span class="kw">CREATE TABLE</span> dpdp_consent_withdrawal (
+  id              BIGSERIAL <span class="kw">PRIMARY KEY</span>,
+  consent_log_id  BIGINT <span class="kw">REFERENCES</span> dpdp_consent_log(id),
+  citizen_ref     VARCHAR(64),
+  reason          TEXT,
+  processed_by    VARCHAR(64),  <span class="cm">-- DPO officer ID</span>
+  withdrawal_ts   TIMESTAMPTZ <span class="kw">NOT NULL DEFAULT NOW</span>(),
+  effective_ts    TIMESTAMPTZ  <span class="cm">-- when withdrawal takes effect</span>
+);</div>
+  </div>
+</div>
+
+<!-- STEP 6 -->
+<div class="tg-step">
+  <div class="tg-step-hd"><div class="tg-num">06</div><div><h3>Privacy Notice Injection into Existing Forms</h3><p class="tg-sub">Zero backend change · Pure client-side JS injected via GTM or Nginx · Adds notice link to every form</p></div></div>
+  <div class="tg-body">
+    <h4 class="tg-h4">form-notice-injector.js — Scans and annotates all forms</h4>
+    <div class="code-block"><span class="cm">/**
+ * DPDP Form Notice Injector
+ * Scans all forms on page load and injects privacy notice link
+ * before every submit button — no form code changes needed
+ */</span>
+(<span class="kw">function</span>() {
+  <span class="kw">var</span> NOTICE_BASE = <span class="str">'/privacy-notice'</span>;
+  <span class="kw">var</span> PURPOSE_MAP = {
+    <span class="cm">// Map form action URLs to their purpose codes</span>
+    <span class="str">'/apply/ration-card'</span>  : <span class="str">'ration-card-eligibility'</span>,
+    <span class="str">'/apply/pension'</span>      : <span class="str">'pension-enrolment'</span>,
+    <span class="str">'/register/citizen'</span>   : <span class="str">'citizen-registration'</span>,
+    <span class="str">'default'</span>             : <span class="str">'general-citizen-service'</span>
+  };
+
+  <span class="kw">function</span> injectNotice() {
+    document.querySelectorAll(<span class="str">'form'</span>).forEach(<span class="kw">function</span>(form) {
+      <span class="kw">if</span> (form.dataset.dpdpInjected) <span class="kw">return</span>;
+      form.dataset.dpdpInjected = <span class="str">'1'</span>;
+
+      <span class="kw">var</span> action  = form.action || window.location.pathname;
+      <span class="kw">var</span> purpose = PURPOSE_MAP[action] || PURPOSE_MAP[<span class="str">'default'</span>];
+      <span class="kw">var</span> notice  = document.createElement(<span class="str">'div'</span>);
+      notice.style.cssText = <span class="str">`
+        background:#FFF3E0; border:1px solid #FF9933; border-radius:6px;
+        padding:8px 12px; margin:8px 0; font-size:12px; color:#4A5568;
+      `</span>;
+      notice.innerHTML = <span class="str">`
+        &lt;strong&gt;&#9432; DPDP Notice:&lt;/strong&gt;
+        Your data is processed under the
+        &lt;a href="${NOTICE_BASE}?purpose=${purpose}" target="_blank"
+           style="color:#003580"&gt;Privacy Notice for this service&lt;/a&gt;
+        per Digital Personal Data Protection Act, 2023.
+        &lt;a href="/consent-manager" style="color:#003580"&gt;Manage preferences&lt;/a&gt;
+      `</span>;
+
+      <span class="cm">// Insert before submit button</span>
+      <span class="kw">var</span> submit = form.querySelector(
+          <span class="str">'[type=submit], button:not([type=button])'</span>);
+      <span class="kw">if</span> (submit) submit.parentNode.insertBefore(notice, submit);
+      <span class="kw">else</span> form.appendChild(notice);
+
+      <span class="cm">// Attach consent timestamp on submit</span>
+      form.addEventListener(<span class="str">'submit'</span>, <span class="kw">function</span>(e) {
+        <span class="kw">var</span> hidden = document.createElement(<span class="str">'input'</span>);
+        hidden.type  = <span class="str">'hidden'</span>;
+        hidden.name  = <span class="str">'dpdp_consent_ts'</span>;
+        hidden.value = <span class="kw">new</span> Date().toISOString();
+        form.appendChild(hidden);
+      });
+    });
+  }
+
+  <span class="cm">// Run on load and on dynamic DOM changes (SPA support)</span>
+  document.addEventListener(<span class="str">'DOMContentLoaded'</span>, injectNotice);
+  <span class="kw">new</span> MutationObserver(injectNotice).observe(
+      document.body, { childList: <span class="kw">true</span>, subtree: <span class="kw">true</span> });
+})();</div>
+  </div>
+</div>
+
+<!-- STEP 7 -->
+<div class="tg-step">
+  <div class="tg-step-hd"><div class="tg-num">07</div><div><h3>Citizen Rights Fulfilment — Standalone Microsite API</h3><p class="tg-sub">Separate Node.js / Python microservice · Connects to existing DB read-only · No changes to main app</p></div></div>
+  <div class="tg-body">
+    <div class="tg-arch">
+      <div class="arch-box citizen">👤 Citizen<br><small>privacy.dept.gov.in</small></div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-box proxy">🔐 Privacy Microsite<br><small>New standalone app</small></div>
+      <div class="arch-arrow">READ-ONLY →</div>
+      <div class="arch-box app">🗄️ Existing DB<br><small>Read-only replica</small></div>
+    </div>
+    <h4 class="tg-h4">Node.js Express — Rights Fulfilment API</h4>
+    <div class="code-block"><span class="cm">// privacy-api.js — Standalone microservice on privacy.dept.gov.in</span>
+<span class="kw">const</span> express = require(<span class="str">'express'</span>);
+<span class="kw">const</span> db      = require(<span class="str">'./db-readonly'</span>); <span class="cm">// read-only DB connection</span>
+<span class="kw">const</span> app     = express();
+app.use(express.json());
+
+<span class="cm">// ── Right to Access (Section 11) ─────────────────────────</span>
+app.get(<span class="str">'/api/rights/access/:citizenId'</span>, async (req, res) => {
+  <span class="kw">const</span> { citizenId } = req.params;
+  <span class="kw">await</span> verifyOTP(req, res);           <span class="cm">// OTP-based citizen auth</span>
+  <span class="kw">const</span> data = <span class="kw">await</span> db.query(<span class="str">`
+    SELECT table_name, field_name, masked_value, collected_date,
+           purpose, shared_with, retention_until
+    FROM   citizen_data_summary
+    WHERE  citizen_ref = $1
+  `</span>, [citizenId]);
+  res.json({ citizenId, data, generatedAt: <span class="kw">new</span> Date() });
+});
+
+<span class="cm">// ── Right to Correction (Section 12) ─────────────────────</span>
+app.post(<span class="str">'/api/rights/correction'</span>, async (req, res) => {
+  <span class="kw">const</span> { citizenId, field, currentValue, requestedValue } = req.body;
+  <span class="kw">const</span> ticket = <span class="kw">await</span> db.query(<span class="str">`
+    INSERT INTO dpdp_rights_requests
+      (citizen_ref, request_type, field_name,
+       current_value, requested_value, status, created_at)
+    VALUES ($1,'CORRECTION',$2,$3,$4,'OPEN',NOW())
+    RETURNING ticket_no
+  `</span>, [citizenId, field, currentValue, requestedValue]);
+  res.json({ ticket: ticket.rows[0].ticket_no,
+             sla: <span class="str">'30 days'</span>, section: <span class="str">'DPDP Act Sec 12'</span> });
+});
+
+<span class="cm">// ── Right to Withdraw Consent (Section 13) ───────────────</span>
+app.post(<span class="str">'/api/rights/withdraw-consent'</span>, async (req, res) => {
+  <span class="kw">const</span> { citizenId, purposes, reason } = req.body;
+  <span class="kw">await</span> db.query(<span class="str">`
+    UPDATE dpdp_consent_log
+    SET    withdrawn_ts = NOW()
+    WHERE  citizen_ref = $1
+    AND    purposes ?| $2::text[]
+  `</span>, [citizenId, purposes]);
+  notifyDPO(citizenId, <span class="str">'CONSENT_WITHDRAWAL'</span>, purposes);
+  res.json({ status: <span class="str">'withdrawn'</span>, effectiveIn: <span class="str">'30 days'</span> });
+});
+
+app.listen(3001, () =>
+  console.log(<span class="str">'DPDP Privacy API running on :3001'</span>));</div>
+  </div>
+</div>
+
+<!-- STEP 8 -->
+<div class="tg-step">
+  <div class="tg-step-hd"><div class="tg-num">08</div><div><h3>Data Retention — Automated Purge Job</h3><p class="tg-sub">Scheduled DB job · Implements Section 8(7) · No application change · Runs on existing DB server</p></div></div>
+  <div class="tg-body">
+    <div class="tg-grid2">
+      <div>
+        <h4 class="tg-h4">SQL Purge Script — Schedule via cron or pg_cron</h4>
+        <div class="code-block"><span class="cm">-- dpdp_purge.sql
+-- Run daily via: cron / pg_cron / SQL Server Agent</span>
+<span class="kw">BEGIN</span>;
+
+<span class="cm">-- Log purge start</span>
+<span class="kw">INSERT INTO</span> dpdp_purge_log
+  (run_ts, phase) <span class="kw">VALUES</span> (NOW(), <span class="str">'START'</span>);
+
+<span class="cm">-- 1. Delete analytics logs older than 90 days</span>
+<span class="kw">DELETE FROM</span> access_logs
+<span class="kw">WHERE</span> created_at &lt; NOW() - <span class="kw">INTERVAL</span> <span class="str">'90 days'</span>
+<span class="cm">--  AND request_uri NOT LIKE '/admin/%'</span>
+  <span class="kw">AND</span> contains_pii = <span class="kw">true</span>;
+
+<span class="cm">-- 2. Anonymise citizen records past retention period
+--    (do NOT delete — statutory retention required)</span>
+<span class="kw">UPDATE</span> citizen_applications <span class="kw">SET</span>
+  name       = <span class="str">'[REDACTED]'</span>,
+  phone      = <span class="str">'[REDACTED]'</span>,
+  email      = <span class="str">'[REDACTED]'</span>,
+  address    = <span class="str">'[REDACTED]'</span>
+<span class="kw">WHERE</span> application_date &lt; NOW() - <span class="kw">INTERVAL</span> <span class="str">'7 years'</span>
+  <span class="kw">AND</span> retention_exempt = <span class="kw">false</span>
+  <span class="kw">AND</span> anonymised_ts <span class="kw">IS NULL</span>;
+
+<span class="kw">UPDATE</span> citizen_applications <span class="kw">SET</span>
+  anonymised_ts = NOW()
+<span class="kw">WHERE</span> name = <span class="str">'[REDACTED]'</span>
+  <span class="kw">AND</span> anonymised_ts <span class="kw">IS NULL</span>;
+
+<span class="cm">-- 3. Close old consent logs (withdrawn &gt;30 days)</span>
+<span class="kw">UPDATE</span> dpdp_consent_log <span class="kw">SET</span>
+  status = <span class="str">'CLOSED'</span>
+<span class="kw">WHERE</span> withdrawn_ts &lt; NOW() - <span class="kw">INTERVAL</span> <span class="str">'30 days'</span>
+  <span class="kw">AND</span> status = <span class="str">'WITHDRAWN'</span>;
+
+<span class="kw">INSERT INTO</span> dpdp_purge_log
+  (run_ts, phase) <span class="kw">VALUES</span> (NOW(), <span class="str">'COMPLETE'</span>);
+<span class="kw">COMMIT</span>;</div>
+      </div>
+      <div>
+        <h4 class="tg-h4">Cron Schedule</h4>
+        <div class="code-block"><span class="cm"># /etc/cron.d/dpdp-purge
+# Run daily at 2:00 AM</span>
+0 2 * * * postgres psql -d deptdb   -f /opt/dpdp/dpdp_purge.sql   >> /var/log/dpdp/purge.log 2>&1</div>
+
+        <h4 class="tg-h4" style="margin-top:1rem">Retention Reference Table</h4>
+        <div class="tbl-wrap" style="margin-top:.5rem"><table style="font-size:11.5px">
+          <thead><tr><th>Data Category</th><th>Retention</th><th>Authority</th></tr></thead>
+          <tbody>
+            <tr><td>Application data</td><td>7 years</td><td>NFSA / scheme Act</td></tr>
+            <tr><td>Access / audit logs</td><td>90 days</td><td>DPDP Rule 6</td></tr>
+            <tr><td>Consent logs</td><td>5 years</td><td>DPDP Act S.8(7)</td></tr>
+            <tr><td>Breach records</td><td>5 years</td><td>DPDP Rule 7</td></tr>
+            <tr><td>Grievance records</td><td>5 years</td><td>Public Records Act</td></tr>
+            <tr><td>DPO correspondence</td><td>3 years</td><td>DPDP best practice</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 9 -->
+<div class="tg-step">
+  <div class="tg-step-hd"><div class="tg-num">09</div><div><h3>Age Verification for Minors — Rule 10</h3><p class="tg-sub">Section 9 · Intercept at registration form · Parental OTP consent flow</p></div></div>
+  <div class="tg-body">
+    <h4 class="tg-h4">age-gate.js — Inject before registration form submission</h4>
+    <div class="code-block"><span class="cm">// Inject via GTM or Nginx on /register, /apply, /enrol endpoints</span>
+(<span class="kw">function</span>() {
+  <span class="kw">var</span> reg = document.querySelector(<span class="str">'form[action*="register"]'</span>) ||
+            document.querySelector(<span class="str">'form[action*="apply"]'</span>);
+  <span class="kw">if</span> (!reg) <span class="kw">return</span>;
+
+  reg.addEventListener(<span class="str">'submit'</span>, <span class="kw">function</span>(e) {
+    <span class="kw">var</span> dobField = reg.querySelector(
+      <span class="str">'[name*="dob"],[name*="birth"],[name*="age"],[type="date"]'</span>);
+    <span class="kw">if</span> (!dobField) <span class="kw">return</span>;
+
+    <span class="kw">var</span> age = getAge(<span class="kw">new</span> Date(dobField.value));
+    <span class="kw">if</span> (age < 18) {
+      e.preventDefault();
+      showParentalConsentModal(reg);   <span class="cm">// capture parent mobile + OTP</span>
+    }
+  });
+
+  <span class="kw">function</span> getAge(dob) {
+    <span class="kw">var</span> today = <span class="kw">new</span> Date();
+    <span class="kw">var</span> age   = today.getFullYear() - dob.getFullYear();
+    <span class="kw">var</span> m     = today.getMonth() - dob.getMonth();
+    <span class="kw">if</span> (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+    <span class="kw">return</span> age;
+  }
+
+  <span class="kw">function</span> showParentalConsentModal(form) {
+    <span class="kw">var</span> modal = document.createElement(<span class="str">'div'</span>);
+    modal.innerHTML = <span class="str">`
+      &lt;div style="position:fixed;inset:0;background:rgba(0,0,0,.6);
+                  z-index:9999;display:flex;align-items:center;
+                  justify-content:center"&gt;
+        &lt;div style="background:#fff;padding:2rem;border-radius:12px;
+                    max-width:420px;width:90%"&gt;
+          &lt;h3 style="margin-bottom:1rem;color:#0A1628"&gt;
+            Parental Consent Required
+          &lt;/h3&gt;
+          &lt;p style="font-size:13px;color:#4A5568;margin-bottom:1rem"&gt;
+            As per DPDP Act 2023 Section 9, processing data of citizens
+            under 18 requires verifiable parental/guardian consent.
+          &lt;/p&gt;
+          &lt;input id="parent-mobile" type="tel" maxlength="10"
+            placeholder="Parent/Guardian Mobile Number"
+            style="width:100%;padding:10px;border:1px solid #ddd;
+                   border-radius:6px;margin-bottom:8px"&gt;
+          &lt;button onclick="sendParentOTP()"
+            style="width:100%;padding:10px;background:#003580;
+                   color:#fff;border:none;border-radius:6px;
+                   cursor:pointer"&gt;
+            Send OTP to Parent
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    `</span>;
+    document.body.appendChild(modal);
+  }
+})();</div>
+  </div>
+</div>
+
+<!-- STEP 10 -->
+<div class="tg-step">
+  <div class="tg-step-hd"><div class="tg-num">10</div><div><h3>Breach Detection & Automated DPB Alert</h3><p class="tg-sub">CERT-In integration · 72-hour clock automation · Rule 7 notification template</p></div></div>
+  <div class="tg-body">
+    <div class="tg-grid2">
+      <div>
+        <h4 class="tg-h4">Breach Notifier Script (Python)</h4>
+        <div class="code-block"><span class="cm"># dpdp_breach_notify.py
+# Triggered by SIEM / IDS alert or manual execution</span>
+<span class="kw">import</span> smtplib, json
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime, timedelta
+<span class="kw">from</span> email.mime.text <span class="kw">import</span> MIMEText
+
+<span class="kw">def</span> notify_dpb(breach_info: dict):
+    <span class="cm"># Rule 7 mandatory fields</span>
+    required = [<span class="str">'nature'</span>, <span class="str">'data_categories'</span>,
+                <span class="str">'approx_affected'</span>, <span class="str">'consequences'</span>,
+                <span class="str">'measures_taken'</span>, <span class="str">'dpo_contact'</span>]
+    missing = [f <span class="kw">for</span> f <span class="kw">in</span> required <span class="kw">if</span> f <span class="kw">not in</span> breach_info]
+    <span class="kw">if</span> missing:
+        <span class="kw">raise</span> ValueError(<span class="str">f"Missing Rule 7 fields: {missing}"</span>)
+
+    deadline = datetime.utcnow() + timedelta(hours=72)
+    subject  = (<span class="str">f"[DPDP BREACH NOTIFICATION] "</span>
+                <span class="str">f"{breach_info['dept']} - Rule 7 Notice"</span>)
+    body = <span class="str">f"""
+Data Protection Board of India
+Subject: Personal Data Breach Notification under Rule 7
+
+1. Nature of breach : {breach_info['nature']}
+2. Data categories  : {', '.join(breach_info['data_categories'])}
+3. Approx. affected : {breach_info['approx_affected']} Data Principals
+4. Likely consequences: {breach_info['consequences']}
+5. Measures taken   : {breach_info['measures_taken']}
+6. DPO Contact      : {breach_info['dpo_contact']}
+7. Breach detected  : {breach_info['detected_at']}
+8. This notice sent : {datetime.utcnow().isoformat()}Z
+
+Department: {breach_info['dept']}
+"""</span>
+    send_email(<span class="str">"breach-notification@dpboard.gov.in"</span>,
+               subject, body)
+    log_breach(breach_info, deadline)
+
+<span class="kw">if</span> __name__ == <span class="str">"__main__"</span>:
+    notify_dpb({
+      <span class="str">"dept"</span>           : <span class="str">"MOFCA"</span>,
+      <span class="str">"nature"</span>         : <span class="str">"Misconfigured S3 bucket"</span>,
+      <span class="str">"data_categories"</span>: [<span class="str">"name"</span>, <span class="str">"phone"</span>, <span class="str">"address"</span>],
+      <span class="str">"approx_affected"</span>: 1240,
+      <span class="str">"consequences"</span>   : <span class="str">"Potential phishing risk"</span>,
+      <span class="str">"measures_taken"</span> : <span class="str">"Bucket made private, audit underway"</span>,
+      <span class="str">"dpo_contact"</span>    : <span class="str">"dpo@mofca.gov.in, +91-11-xxxx"</span>,
+      <span class="str">"detected_at"</span>    : <span class="str">"2025-05-12T09:14:00Z"</span>
+    })</div>
+      </div>
+      <div>
+        <h4 class="tg-h4">Deployment Checklist</h4>
+        <ul class="tg-list">
+          <li>Integrate with SIEM (Splunk / ELK) — auto-trigger on anomaly alerts</li>
+          <li>Store DPB notification email in config, not hardcoded</li>
+          <li>Test quarterly with a simulated breach drill</li>
+          <li>Log all notifications to <code>dpdp_breach_log</code> table</li>
+          <li>Add PDF attachment of Rule 7 format notification</li>
+          <li>BCC: Department CISO and DPO on every notification</li>
+        </ul>
+        <div class="note bad" style="margin-top:1rem">
+          <div><strong>72-Hour Clock</strong><br>Starts from the moment your monitoring system <em>detects</em> the breach — not when it is reported to management. Automate detection → notification pipeline.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STEP 11: Legacy-Specific -->
+<div class="tg-step">
+  <div class="tg-step-hd"><div class="tg-num">11</div><div><h3>Legacy Application — Technology-Specific Quick Reference</h3><p class="tg-sub">NIC-hosted apps · COBOL-backed systems · Classic ASP · Cold Fusion · Struts 1.x</p></div></div>
+  <div class="tg-body">
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Technology</th><th>DPDP Integration Approach</th><th>Where to Intervene</th><th>Effort</th></tr></thead>
+      <tbody>
+        <tr><td>NIC e-Forms (JSP/Servlet)</td><td>Nginx sub_filter injection + Java Filter in web.xml</td><td>web.xml filter chain, nginx.conf</td><td>Low</td></tr>
+        <tr><td>Classic ASP (.asp)</td><td>Nginx sub_filter for banner + Global.asa for consent logging</td><td>Global.asa, IIS web.config</td><td>Low</td></tr>
+        <tr><td>PHP 5.x / WordPress</td><td>wp-content/mu-plugins/dpdp.php auto-loaded plugin</td><td>mu-plugins directory</td><td>Very Low</td></tr>
+        <tr><td>Cold Fusion (CFML)</td><td>Application.cfm onRequestStart hook + CF component</td><td>Application.cfm root file</td><td>Low</td></tr>
+        <tr><td>Struts 1.x (Java)</td><td>ActionServlet subclass override + struts-config.xml plugin</td><td>web.xml, struts-config.xml</td><td>Medium</td></tr>
+        <tr><td>COBOL-backed Web (CGI)</td><td>Apache mod_substitute for banner; consent log in shell wrapper</td><td>httpd.conf, CGI wrapper script</td><td>Low</td></tr>
+        <tr><td>Oracle Forms / Reports</td><td>Nginx front-end injection; cannot modify Forms directly</td><td>Nginx conf only</td><td>Very Low</td></tr>
+        <tr><td>SAP Web GUI</td><td>SAP Web Dispatcher filter + ABAP exit for consent logging</td><td>SAP Web Dispatcher config</td><td>Medium</td></tr>
+        <tr><td>Any tech (universal)</td><td>DNS → WAF/Cloudflare → inject banner at CDN edge</td><td>DNS CNAME, WAF rules</td><td>Very Low</td></tr>
+      </tbody>
+    </table></div>
+
+    <h4 class="tg-h4" style="margin-top:1.2rem">Universal Fallback — CDN / WAF Edge Injection</h4>
+    <div class="code-block"><span class="cm"># Works for ANY application regardless of backend technology
+# Route DNS through NIC CDN or Cloudflare / AWS CloudFront
+# Add a Transform Rule (Cloudflare) or Lambda@Edge function:</span>
+
+<span class="cm">// Cloudflare Worker — Edge injection (no server access needed)</span>
+addEventListener(<span class="str">'fetch'</span>, event => {
+  event.respondWith(injectDpdpBanner(event.request));
+});
+
+<span class="kw">async function</span> injectDpdpBanner(request) {
+  <span class="kw">const</span> response = <span class="kw">await</span> fetch(request);
+  <span class="kw">const</span> contentType = response.headers.get(<span class="str">'content-type'</span>) || <span class="str">''</span>;
+  <span class="kw">if</span> (!contentType.includes(<span class="str">'text/html'</span>)) <span class="kw">return</span> response;
+
+  <span class="kw">let</span> html = <span class="kw">await</span> response.text();
+  <span class="kw">const</span> bannerScript = <span class="str">`
+    &lt;script src="https://cdn.dpdp.gov.in/consent-banner.js" async&gt;
+    &lt;/script&gt;`</span>;
+  html = html.replace(<span class="str">'&lt;/body&gt;'</span>, bannerScript + <span class="str">'&lt;/body&gt;'</span>);
+
+  <span class="kw">return new</span> Response(html, {
+    headers: {
+      ...<span class="kw">Object</span>.fromEntries(response.headers),
+      <span class="str">'Strict-Transport-Security'</span>: <span class="str">'max-age=31536000'</span>,
+      <span class="str">'X-Frame-Options'</span>: <span class="str">'SAMEORIGIN'</span>,
+      <span class="str">'X-Content-Type-Options'</span>: <span class="str">'nosniff'</span>,
+    }
+  });
+}</div>
+  </div>
+</div>
+
 </section>
 
 </main>
@@ -947,6 +1741,14 @@ function resolveDPO(btn,ref){
 // ── Init ─────────────────────────────────────────────────────────────────────
 try{var saved=localStorage.getItem('dpdp_cl');if(saved)checked=JSON.parse(saved);}catch(e){}
 renderCL('all');
+
+function tgTab(id, btn) {
+  document.querySelectorAll('.tg-pane').forEach(function(p){ p.classList.remove('on'); });
+  document.querySelectorAll('.tg-tab').forEach(function(b){ b.classList.remove('on'); });
+  document.getElementById('tg-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
 </script>
 </body>
 </html>
