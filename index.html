@@ -307,6 +307,435 @@ td:first-child{font-weight:600;color:var(--navy2)}
   .ci{break-inside:avoid}
 }
 
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE STYLES — Full breakpoint coverage
+   Mobile-first: 480px | 600px | 768px | 1024px
+═══════════════════════════════════════════════ */
+
+/* ── Base touch/accessibility improvements ── */
+button, select, input, textarea {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+img { max-width: 100%; height: auto; }
+
+/* ── Small desktop / large tablet (≤1024px) ── */
+@media (max-width: 1024px) {
+  .content { padding: 1.5rem 1.2rem 4rem; }
+  .hero { padding: 2.2rem 1.5rem 1.8rem; }
+  .hero h1 { font-size: 1.8rem; }
+  .grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  .fg-row { grid-template-columns: 1fr 1fr; }
+  .dpb-g { grid-template-columns: 1fr 1fr; }
+  .tbl-wrap table { font-size: 12px; }
+  th { padding: 9px 10px; font-size: 11px; }
+  td { padding: 8px 10px; font-size: 12px; }
+}
+
+/* ── Tablet (≤768px) ── */
+@media (max-width: 768px) {
+  /* Topbar */
+  .topbar { height: auto; min-height: 54px; padding: .6rem 1rem; flex-wrap: wrap; gap: .4rem; }
+  .tb-t { font-size: 12.5px; }
+  .tb-t .sep { display: none; }
+  .tb-r { gap: 6px; flex-wrap: wrap; }
+  .dept-sel { font-size: 11px; padding: 4px 8px; max-width: 160px; }
+  .badge { font-size: 9px; padding: 2px 8px; }
+
+  /* Hero */
+  .hero { padding: 1.8rem 1.2rem 1.5rem; }
+  .hero h1 { font-size: 1.55rem; max-width: 100%; }
+  .hero p { font-size: 12.5px; max-width: 100%; margin-bottom: 1.2rem; }
+  .hero::before, .hero::after { display: none; }
+  .stats { gap: .6rem; }
+  .stat { padding: 7px 10px; }
+  .stat .n { font-size: 17px; }
+  .stat .l { font-size: 10px; }
+
+  /* Tabs */
+  .tabs { padding: 0; }
+  .tab { height: 42px; padding: 0 12px; font-size: 12px; gap: 4px; }
+  .tab i { font-size: 14px; }
+
+  /* Content */
+  .content { padding: 1.2rem 1rem 3.5rem; }
+  .sh h2 { font-size: 1.25rem; }
+
+  /* Cards */
+  .grid { grid-template-columns: 1fr; gap: .85rem; }
+  .card { padding: 1.1rem; }
+
+  /* Phases */
+  .ph-col { width: 34px; }
+  .ph-dot { width: 28px; height: 28px; font-size: 12px; }
+  .ph-body { padding: .85rem 1rem; }
+  .ph-body h3 { font-size: 13px; }
+  .ph-steps li { font-size: 12px; }
+
+  /* Checklist toolbar */
+  .cl-toolbar { flex-direction: column; align-items: flex-start; }
+  .cl-filters { gap: 5px; }
+  .cl-actions { width: 100%; justify-content: flex-start; }
+  .fb { padding: 4px 10px; font-size: 11.5px; }
+  .act-btn { padding: 4px 10px; font-size: 11.5px; }
+
+  /* Checklist items */
+  .ci { padding: .75rem .9rem; gap: 9px; }
+  .ci-title { font-size: 12.5px; }
+  .ci-desc { font-size: 11.5px; }
+  .ci-meta { gap: 5px; }
+  .cp { font-size: 10px; padding: 2px 6px; }
+
+  /* Progress bar */
+  .prog-wrap { padding: 1rem; }
+  .prog-bd { gap: .6rem; }
+  .pb-i { font-size: 10.5px; }
+
+  /* Tables */
+  .tbl-wrap { border-radius: var(--r); }
+  th { font-size: 11px; padding: 8px 9px; white-space: normal; }
+  td { font-size: 11.5px; padding: 7px 9px; }
+
+  /* Consent module */
+  .con-body { padding: 1rem 1.1rem; }
+  .con-row { padding: 8px 10px; gap: 8px; font-size: 12px; }
+  .con-btns { flex-direction: column; gap: 8px; }
+  .btn-p, .btn-s { padding: 10px; font-size: 13px; }
+
+  /* Breach timeline */
+  .breach-timeline { padding-left: 2rem; }
+  .bt-header h4 { font-size: 12.5px; }
+  .bt-item p { font-size: 12px; }
+
+  /* DPO Dashboard */
+  .dpo-stat-grid { grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+  .dpo-stat .ds-n { font-size: 22px; }
+  .req-table th { font-size: 11px; padding: 8px 8px; }
+  .req-table td { font-size: 11.5px; padding: 7px 8px; }
+
+  /* Modals */
+  .mo { padding: .8rem .6rem; align-items: flex-end; }
+  .modal { border-radius: var(--rx) var(--rx) 0 0; max-height: 92vh; }
+  .mh { padding: .9rem 1.2rem; }
+  .mh h2 { font-size: 13.5px; }
+  .mb { padding: 1.2rem 1.3rem; max-height: 78vh; }
+
+  /* DPO Form */
+  .dpo-profile { flex-direction: column; text-align: center; padding: .85rem 1rem; }
+  .fg-row { grid-template-columns: 1fr; }
+  .chips { gap: .5rem; }
+  .chip { font-size: 11.5px; padding: 6px 10px; }
+
+  /* DPB panel */
+  .dpb-hero { flex-direction: column; text-align: center; gap: .6rem; }
+  .dpb-g { grid-template-columns: 1fr; }
+  .dpb-link { padding: .7rem .9rem; }
+  .dpb-link-l b { font-size: 12px; }
+  .dpb-link-l span { font-size: 11px; }
+
+  /* PDF panel */
+  .pdf-hero { flex-direction: column; gap: .6rem; text-align: center; }
+  .pdf-meta { grid-template-columns: repeat(3, 1fr); gap: .5rem; }
+  .pdf-toc li { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .pdf-toc li span { display: none; }
+
+  /* Privacy Policy */
+  .pp-stamp { gap: 1rem; }
+  .pp-stamp > div { min-width: 80px; }
+
+  /* Footer */
+  .portal-footer { flex-direction: column; align-items: flex-start; padding: 1.2rem 1rem; gap: .8rem; }
+  .f-links { flex-wrap: wrap; gap: 2px; }
+  .f-link { font-size: 11.5px; padding: 5px 10px; }
+
+  /* Tech guide */
+  .tg-step-hd { padding: .9rem 1rem; gap: .75rem; }
+  .tg-num { width: 34px; height: 34px; font-size: 13px; }
+  .tg-step-hd h3 { font-size: 13px; }
+  .tg-sub { font-size: 11px; }
+  .tg-body { padding: 1rem; }
+  .tg-h4 { font-size: 12px; }
+  .code-block { font-size: 11px; padding: .85rem 1rem; }
+  .tg-tabs { gap: 5px; }
+  .tg-tab { font-size: 11.5px; padding: 4px 11px; }
+  .arch-box { min-width: 90px; font-size: 11.5px; }
+
+  /* Breach log */
+  .bl-row { gap: 8px; padding: 9px 12px; }
+  .bl-info b { font-size: 12px; }
+  .bl-info span { font-size: 10.5px; }
+  .bl-date { font-size: 10.5px; }
+
+  /* Section heads */
+  .sh2 h3 { font-size: 1rem; }
+}
+
+/* ── Mobile (≤600px) ── */
+@media (max-width: 600px) {
+  /* Topbar — collapse label */
+  .tb-t span:not(b) { display: none; }
+  .topbar { padding: .5rem .9rem; }
+  .dept-sel { max-width: 130px; font-size: 10.5px; }
+
+  /* Hero */
+  .hero { padding: 1.4rem 1rem 1.2rem; }
+  .hero h1 { font-size: 1.35rem; }
+  .hero-eye span { font-size: 9px; letter-spacing: 1.5px; }
+  .hero p { font-size: 12px; margin-bottom: 1rem; }
+  .stats { gap: .5rem; }
+  .stat { padding: 6px 9px; }
+  .stat .n { font-size: 16px; }
+  .stat .l { font-size: 9.5px; }
+  .dept-banner { font-size: 11.5px; padding: 7px 10px; }
+
+  /* Tabs — icon only on very small */
+  .tab { padding: 0 10px; font-size: 11.5px; }
+  .tab span.tab-label { display: none; }
+
+  /* Content */
+  .content { padding: 1rem .85rem 3rem; }
+  .sh h2 { font-size: 1.15rem; }
+  .sh p { font-size: 12px; }
+
+  /* Notes */
+  .note { font-size: 12px; padding: .75rem .9rem; }
+  .note strong { font-size: 12.5px; }
+
+  /* Cards */
+  .card { padding: 1rem; border-radius: var(--r); }
+  .card h3 { font-size: 13.5px; }
+  .card p { font-size: 12px; }
+  .card ul li { font-size: 12px; }
+  .ico { width: 34px; height: 34px; font-size: 15px; }
+
+  /* Tags */
+  .tag { font-size: 9px; padding: 2px 6px; }
+
+  /* Phase steps */
+  .ph-steps li { font-size: 11.5px; padding: 4px 0 4px 18px; }
+
+  /* Checklist */
+  .cl-actions { flex-wrap: wrap; }
+  .act-btn { flex: 1; justify-content: center; }
+  .ci { padding: .7rem .85rem; }
+  .ci-title { font-size: 12px; }
+  .ci-desc { font-size: 11px; }
+
+  /* Progress */
+  .prog-hd h3 { font-size: 13px; }
+  .prog-hd span { font-size: 13px; }
+  .prog-bd { flex-direction: column; gap: .3rem; }
+
+  /* Tables */
+  th, td { padding: 7px 8px; font-size: 11px; }
+  td:first-child { font-size: 11.5px; }
+
+  /* Consent */
+  .con-hdr h3 { font-size: 12.5px; }
+  .con-body { padding: .9rem .9rem; }
+  .con-row { padding: 7px 9px; }
+  .con-txt b { font-size: 12.5px; }
+  .con-txt span { font-size: 10.5px; }
+
+  /* DPO dashboard stats */
+  .dpo-stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .dpo-stat .ds-n { font-size: 20px; }
+  .dpo-stat .ds-l { font-size: 10px; }
+
+  /* Dashboard table — hide less important columns */
+  .req-table th:nth-child(3),
+  .req-table td:nth-child(3) { display: none; }
+  .req-table th:nth-child(5),
+  .req-table td:nth-child(5) { display: none; }
+
+  /* Modals */
+  .mo { padding: .5rem 0; }
+  .modal { border-radius: var(--r) var(--r) 0 0; }
+  .mh { padding: .85rem 1.1rem; }
+  .mh h2 { font-size: 13px; gap: 7px; }
+  .mb { padding: 1rem 1.1rem; }
+  .pp-stamp { flex-direction: column; gap: .5rem; }
+  .pdf-meta { grid-template-columns: 1fr 1fr; }
+
+  /* DPB */
+  .dpb-g { gap: .6rem; }
+  .dpb-hero { padding: 1rem; }
+  .dpb-hero h3 { font-size: 13.5px; }
+  .dpb-hero p { font-size: 11.5px; }
+  .tl-t b { font-size: 12px; }
+  .tl-t span { font-size: 11px; }
+
+  /* Footer */
+  .f-link { font-size: 11px; padding: 4px 9px; }
+  .f-left { font-size: 10.5px; }
+
+  /* Tech guide */
+  .tg-step-hd { flex-direction: row; gap: .6rem; }
+  .tg-num { width: 30px; height: 30px; font-size: 12px; flex-shrink: 0; }
+  .tg-step-hd h3 { font-size: 12.5px; }
+  .tg-sub { font-size: 10.5px; }
+  .tg-body { padding: .85rem .9rem; }
+  .code-block { font-size: 10.5px; padding: .75rem .85rem; border-radius: 6px; }
+  .tg-tabs { gap: 4px; }
+  .tg-tab { font-size: 11px; padding: 3px 9px; }
+  .tg-arch { flex-direction: column; gap: .4rem; padding: .6rem; }
+  .arch-box { width: 100%; max-width: 200px; }
+  .arch-arrow { transform: rotate(90deg); }
+  .tg-list li { font-size: 12px; }
+  .tg-h4 { font-size: 11.5px; }
+}
+
+/* ── Extra small mobile (≤400px) ── */
+@media (max-width: 400px) {
+  .hero h1 { font-size: 1.2rem; }
+  .topbar { padding: .45rem .75rem; }
+  .wheel { width: 30px; height: 30px; font-size: 15px; }
+  .badge { display: none; }
+  .dept-sel { max-width: 120px; }
+  .tab { padding: 0 8px; font-size: 11px; }
+  .content { padding: .9rem .75rem 2.5rem; }
+  .card { padding: .9rem; }
+  .modal { border-radius: 10px 10px 0 0; }
+  .mb { padding: .9rem 1rem; }
+  .stats { gap: .4rem; }
+  .stat .n { font-size: 15px; }
+  .code-block { font-size: 10px; }
+  .dpo-stat-grid { grid-template-columns: repeat(2, 1fr); gap: .5rem; }
+
+  /* Dashboard table — keep only essential columns */
+  .req-table th:nth-child(4),
+  .req-table td:nth-child(4) { display: none; }
+}
+
+/* ── Landscape mobile ── */
+@media (max-width: 768px) and (orientation: landscape) {
+  .hero { padding: 1.2rem 1.5rem 1rem; }
+  .hero h1 { font-size: 1.3rem; }
+  .stats { flex-direction: row; }
+  .mo { align-items: center; padding: .5rem 1rem; }
+  .mb { max-height: 70vh; }
+}
+
+/* ── Touch device hover removal ── */
+@media (hover: none) {
+  .card:hover { box-shadow: var(--sh); }
+  .ci:hover { border-color: var(--bdr); box-shadow: var(--sh); }
+  .dpb-link:hover { border-color: rgba(0,53,128,.12); background: var(--bl); }
+}
+
+
+/* ═══════════════════════════════════════════════
+   OVERFLOW & CLIPPING FIXES
+   Addresses: tg-grid2 clip, code-block overflow,
+   table overflow, modal content overflow
+═══════════════════════════════════════════════ */
+
+/* Root overflow guard */
+html, body { overflow-x: hidden; max-width: 100%; }
+
+/* Content area must not overflow */
+.content { overflow: hidden; }
+
+/* All panels must clip their children */
+.panel { min-width: 0; overflow: hidden; }
+
+/* ── Tech guide grid — the primary fix ── */
+.tg-grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  min-width: 0;          /* critical — prevents grid blowout */
+  overflow: hidden;
+}
+.tg-grid2 > * {
+  min-width: 0;          /* each child must respect column boundary */
+  overflow: hidden;
+}
+
+/* ── Code blocks — the secondary fix ── */
+.code-block {
+  white-space: pre-wrap !important;   /* wrap long lines */
+  word-break: break-all;
+  overflow-x: auto;
+  overflow-y: visible;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* ── Tech step body must clip ── */
+.tg-step { overflow: hidden; max-width: 100%; }
+.tg-body { overflow: hidden; min-width: 0; }
+.tg-pane { min-width: 0; overflow: hidden; }
+
+/* ── Card grids must clip ── */
+.grid { min-width: 0; }
+.card { min-width: 0; overflow: hidden; word-break: break-word; }
+
+/* ── Tables must scroll not overflow ── */
+.tbl-wrap { overflow-x: auto; max-width: 100%; }
+table { table-layout: auto; }
+th, td { word-break: break-word; }
+
+/* ── Phase body clip ── */
+.ph-body { min-width: 0; overflow: hidden; }
+
+/* ── Modal body scroll ── */
+.mb { overflow-y: auto; overflow-x: hidden; }
+.modal { overflow: hidden; }
+
+/* ── Consent box ── */
+.consent-box { overflow: hidden; max-width: 100%; }
+
+/* ── DPO form ── */
+.dpo-profile { min-width: 0; }
+.form-ok, #dpo-form { min-width: 0; overflow: hidden; }
+
+/* ── Breach log and timeline ── */
+.breach-log { overflow: hidden; }
+.breach-timeline { overflow: hidden; }
+
+/* ── Override grid on all small screens ── */
+@media (max-width: 900px) {
+  .tg-grid2 {
+    grid-template-columns: 1fr !important;
+  }
+  .tg-grid2 > * { min-width: 0; }
+}
+
+/* ── Prevent any pre/code overflow ── */
+pre, code {
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+.code-block pre, .code-block code { white-space: inherit; }
+
+/* ── Topbar right side ── */
+.tb-r { min-width: 0; flex-shrink: 1; }
+
+/* ── Stats wrap properly ── */
+.stats { flex-wrap: wrap; }
+
+/* ── All flex children must shrink ── */
+.note > div { min-width: 0; flex: 1; }
+.ci-body { min-width: 0; }
+.chip { min-width: 0; flex-shrink: 1; }
+
+/* ── DPB and PDF hero flex children ── */
+.dpb-hero > *, .pdf-hero > *, .dpo-profile > * { min-width: 0; }
+
+/* ── Req table on small screens ── */
+@media (max-width: 600px) {
+  .req-table { font-size: 11px; }
+  .req-table th, .req-table td { padding: 6px 7px; word-break: break-word; }
+}
+
+/* ── Architecture boxes in tech guide ── */
+.tg-arch { flex-wrap: wrap; }
+.arch-box { flex-shrink: 1; min-width: 80px; max-width: 100%; }
+
 @keyframes spin{to{transform:rotate(360deg)}}
 @media(max-width:600px){
   .hero h1{font-size:1.55rem}
@@ -388,14 +817,14 @@ td:first-child{font-weight:600;color:var(--navy2)}
 <!-- TABS -->
 <div class="tabs" role="tablist">
   <button class="tab on" onclick="tab('overview',this)"><i class="ti ti-home"></i>Overview</button>
-  <button class="tab" onclick="tab('roadmap',this)"><i class="ti ti-road"></i>Roadmap</button>
-  <button class="tab" onclick="tab('checklist',this)"><i class="ti ti-checklist"></i>Checklist</button>
-  <button class="tab" onclick="tab('consent',this)"><i class="ti ti-file-certificate"></i>Consent</button>
-  <button class="tab" onclick="tab('rights',this)"><i class="ti ti-users"></i>Citizen Rights</button>
-  <button class="tab" onclick="tab('breach',this)"><i class="ti ti-shield-exclamation"></i>Breach Response</button>
-  <button class="tab" onclick="tab('dpo',this)"><i class="ti ti-dashboard"></i>DPO Dashboard</button>
-  <button class="tab" onclick="tab('exemptions',this)"><i class="ti ti-scale"></i>Exemptions</button>
-  <button class="tab" onclick="tab('techguide',this)"><i class="ti ti-terminal-2"></i>Tech Implementation</button>
+  <button class="tab" onclick="tab('roadmap',this)"><i class="ti ti-road"></i><span class="tab-label">Roadmap</span></button>
+  <button class="tab" onclick="tab('checklist',this)"><i class="ti ti-checklist"></i><span class="tab-label">Checklist</span></button>
+  <button class="tab" onclick="tab('consent',this)"><i class="ti ti-file-certificate"></i><span class="tab-label">Consent</span></button>
+  <button class="tab" onclick="tab('rights',this)"><i class="ti ti-users"></i><span class="tab-label">Citizen Rights</span></button>
+  <button class="tab" onclick="tab('breach',this)"><i class="ti ti-shield-exclamation"></i><span class="tab-label">Breach Response</span></button>
+  <button class="tab" onclick="tab('dpo',this)"><i class="ti ti-dashboard"></i><span class="tab-label">DPO Dashboard</span></button>
+  <button class="tab" onclick="tab('exemptions',this)"><i class="ti ti-scale"></i><span class="tab-label">Exemptions</span></button>
+  <button class="tab" onclick="tab('techguide',this)"><i class="ti ti-terminal-2"></i><span class="tab-label">Tech Implementation</span></button>
 </div>
 
 <main class="content">
